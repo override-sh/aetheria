@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import { ReactChildren } from "@override/open-press-interfaces";
-import { Providers } from "./providers";
+
+import "./globals.css";
+import { nunito } from "@override/open-press-components";
 
 export const metadata: Metadata = {
 	title:       "Welcome to front-end",
@@ -12,10 +14,8 @@ export default function RootLayout(
 ): JSX.Element {
 	return (
 		<html lang="en">
-			<body>
-				<Providers>
-					{children}
-				</Providers>
+			<body className={`text-primary-800 ${nunito.className}`}>
+				{children}
 			</body>
 		</html>
 	);

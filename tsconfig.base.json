@@ -18,8 +18,20 @@
 		"skipDefaultLibCheck": true,
 		"baseUrl": ".",
 		"paths": {
+			"@override/open-press-components": [
+				"libs/open-press-components/src/index.ts"
+			],
+			"@override/open-press-components/server": [
+				"libs/open-press-components/src/server.ts"
+			],
 			"@override/open-press-interfaces": [
 				"libs/open-press-interfaces/src/index.ts"
+			],
+			"@override/utility": [
+				"libs/utility/src/index.ts"
+			],
+			"@override/utility/server": [
+				"libs/utility/src/server.ts"
 			]
 		}
 	},
