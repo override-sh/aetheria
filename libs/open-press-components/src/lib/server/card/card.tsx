@@ -1,24 +1,30 @@
 import { CardProps, ReactChildren } from "@override/open-press-interfaces";
 import { HTMLAttributes } from "react";
 import { card_classes } from "./style";
-import { toHtmlClasses } from "@override/utility";
+import classNames from "classnames";
 
 export const Card = (
 	{
 		children,
 		size,
+		className,
 		...others
 	}: ReactChildren & HTMLAttributes<HTMLDivElement> & CardProps,
 ): JSX.Element => {
-	const classes = toHtmlClasses([
-		card_classes.card,
-		size === "small"
-		? card_classes.card_small
-		: null,
-	]);
-
 	return (
-		<div className={classes} {...others}>
+		<div
+			className={
+				classNames(
+					className,
+					card_classes.card,
+					{
+						[card_classes.card_small]: size === "small",
+					},
+				)
+			}
+			{...others}
+		>
+			{children}
 		</div>
 	);
 };

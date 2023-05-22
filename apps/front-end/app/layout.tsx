@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { ReactChildren } from "@override/open-press-interfaces";
 
 import "./globals.css";
-import { nunito } from "@override/open-press-components";
+import { nunito } from "@override/open-press-components/server";
 
 export const metadata: Metadata = {
 	title:       "Welcome to front-end",

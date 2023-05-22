@@ -1,0 +1,16 @@
+.button {
+    @apply transition-all duration-300 rounded-md p-2 hover:shadow-md;
+
+    &.button_outline {
+        @apply border bg-transparent;
+
+        &.button_success {
+            @apply border-success-600 hover:bg-success-500 hover:text-white hover:shadow-success-600/50;
+        }
+    }
+
+    &.button_left_pane {
+        @apply absolute top-1/2 -translate-y-1/2 translate-x-1/2 right-0 rounded-full bg-secondary-100 h-8 w-8 flex;
+        @apply items-center justify-center shadow-lg shadow-secondary-900/25 p-0;
+    }
+}

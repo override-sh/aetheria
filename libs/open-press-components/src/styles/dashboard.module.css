@@ -1,0 +1,31 @@
+.dashboard_layout {
+    @apply h-screen w-screen bg-secondary-100 bg-opacity-25;
+    gap: 0 .5rem;
+    display: grid;
+
+    grid-auto-flow: column;
+    grid-template-columns: 4rem auto;
+    transition: all ease-in-out 0.25s;
+
+    & nav {
+        transition: all 0.3s ease-in-out;
+    }
+
+    & header {
+        transition: all 0.3s ease-in-out;
+    }
+
+    & .page {
+        transition: all 0.3s ease-in-out;
+        grid-row: 1 / span 2;
+    }
+
+    &.nav_extended {
+        grid-template-columns: 18rem auto;
+    }
+
+    & .left_pane {
+        display: grid;
+        grid-template-rows: 4rem auto;
+    }
+}
