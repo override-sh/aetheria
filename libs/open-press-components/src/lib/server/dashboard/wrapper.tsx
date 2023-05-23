@@ -26,7 +26,10 @@ export const DashboardWrapper = (
 				)}
 			{...others}
 		>
-			<LeftPaneWrapper className={dashboard_classes.left_pane}>
+			<LeftPaneWrapper
+				id={"left-pane-wrapper"}
+				className={dashboard_classes.left_pane}
+			>
 				<LeftPaneHeader>
 					Logo
 				</LeftPaneHeader>

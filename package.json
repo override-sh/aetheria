@@ -8,6 +8,7 @@
 		"@nx/next": "16.2.1",
 		"@swc/helpers": "~0.5.0",
 		"@tabler/icons-react": "^2.20.0",
+		"@tabler/icons-webfont": "^2.20.0",
 		"classnames": "^2.3.2",
 		"grapesjs": "^0.21.1",
 		"next": "^13.4.3",
@@ -18,6 +19,7 @@
 		"tslib": "^2.3.0"
 	},
 	"devDependencies": {
+		"@babel/preset-react": "^7.14.5",
 		"@nx/cypress": "16.2.1",
 		"@nx/eslint-plugin": "16.2.1",
 		"@nx/jest": "16.2.1",
@@ -33,6 +35,7 @@
 		"@tailwindcss/forms": "^0.5.3",
 		"@tailwindcss/typography": "^0.5.9",
 		"@testing-library/react": "14.0.0",
+		"@types/backbone": "^1.4.15",
 		"@types/jest": "^29.4.0",
 		"@types/node": "18.14.2",
 		"@types/react": "18.0.28",

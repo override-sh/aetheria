@@ -18,11 +18,23 @@
 		"skipDefaultLibCheck": true,
 		"baseUrl": ".",
 		"paths": {
+			"@grapesjs/*": [
+				"libs/grapesjs/src/*"
+			],
+			"@override/gjs-base-blocks": [
+				"libs/gjs-base-blocks/src/index.ts"
+			],
+			"@override/gjs-ui": [
+				"libs/gjs-ui/src/index.ts"
+			],
 			"@override/open-press-components": [
 				"libs/open-press-components/src/index.ts"
 			],
 			"@override/open-press-components/server": [
 				"libs/open-press-components/src/server.ts"
+			],
+			"@override/open-press-hooks": [
+				"libs/open-press-hooks/src/index.ts"
 			],
 			"@override/open-press-interfaces": [
 				"libs/open-press-interfaces/src/index.ts"

@@ -1,7 +1,8 @@
 .dashboard_layout {
-    @apply h-screen w-screen bg-secondary-100 bg-opacity-25;
+    @apply h-screen w-screen;
     gap: 0 .5rem;
     display: grid;
+    position: relative;
 
     grid-auto-flow: column;
     grid-template-columns: 4rem auto;

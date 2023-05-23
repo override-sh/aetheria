@@ -1,0 +1,36 @@
+{
+	"name": "gjs-base-blocks",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "libs/gjs-base-blocks/src",
+	"projectType": "library",
+	"tags": [],
+	"targets": {
+		"lint": {
+			"executor": "@nx/linter:eslint",
+			"outputs": [
+				"{options.outputFile}"
+			],
+			"options": {
+				"lintFilePatterns": [
+					"libs/gjs-base-blocks/**/*.{ts,tsx,js,jsx}"
+				]
+			}
+		},
+		"test": {
+			"executor": "@nx/jest:jest",
+			"outputs": [
+				"{workspaceRoot}/coverage/{projectRoot}"
+			],
+			"options": {
+				"jestConfig": "libs/gjs-base-blocks/jest.config.ts",
+				"passWithNoTests": true
+			},
+			"configurations": {
+				"ci": {
+					"ci": true,
+					"codeCoverage": true
+				}
+			}
+		}
+	}
+}

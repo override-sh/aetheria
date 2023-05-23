@@ -15,7 +15,7 @@ export default function Layout(
 	// const user = null;
 
 	return (
-		<main className={"h-screen w-screen grid grid-cols-2 m-0 p-0 gap-0"}>
+		<main className={"min-h-screen min-w-screen grid grid-cols-2 m-0 p-0 gap-0"}>
 			{user ? dashboard : login}
 		</main>
 	);

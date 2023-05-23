@@ -1,0 +1,1 @@
+export type UiCommandNames = "ui.show-layers" | "ui.show-styles" | "ui.show-traits";
