@@ -1,4 +1,5 @@
 import { Editor } from "@grapesjs/index";
+import { explodeClasses } from "@override/utility";
 
 export const FormComponent = (editor: Editor) => {
 	editor.Components.addType("form", {
@@ -12,7 +13,9 @@ export const FormComponent = (editor: Editor) => {
 				tagName:    "form",
 				droppable:  true, // Can't drop other elements inside
 				attributes: { // Default attributes
-
+					target:       "none",
+					method:       "get",
+					autocomplete: "on",
 				},
 				traits:     [
 					"action",
@@ -20,6 +23,11 @@ export const FormComponent = (editor: Editor) => {
 						type:    "select",
 						name:    "target",
 						options: [
+							{
+								id:   "none",
+								name: "None",
+
+							},
 							{
 								id:   "_self",
 								name: "Self",
@@ -38,10 +46,10 @@ export const FormComponent = (editor: Editor) => {
 							},
 						],
 					},
-					"target",
 					"rel",
 					{
 						type:    "select",
+						name:    "method",
 						options: [
 							{
 								id:   "get",
@@ -52,18 +60,20 @@ export const FormComponent = (editor: Editor) => {
 								name: "POST",
 							},
 						],
-						name:    "method",
 					},
 					{
-						type: "checkbox",
-						name: "autocomplete",
+						type:       "checkbox",
+						name:       "autocomplete",
+						valueTrue:  "on",
+						valueFalse: "off",
 					},
 					{
-						type: "checkbox",
-						name: "novalidate",
+						type:  "checkbox",
+						name:  "novalidate",
+						label: "Disable validation",
 					},
 				],
-				classes:    "p-2 border-2 border-dashed".split(" "),
+				classes:    explodeClasses("p-2"),
 			},
 		},
 	});

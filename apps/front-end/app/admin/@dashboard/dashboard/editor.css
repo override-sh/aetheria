@@ -1,47 +1,117 @@
-/* Let's highlight canvas boundaries */
-#gjs {
-    border: 3px solid #444;
-}
+.editor {
+    @apply relative h-screen w-full font-nunito text-base;
 
-/* Reset some default styling */
-.gjs-cv-canvas {
-    top: 0;
-    width: 100%;
-    height: 100%;
-}
+    .panel__top {
+        @apply pr-2 w-full flex h-12 max-h-12;
+        position: initial;
+        justify-content: space-between;
+    }
 
-.gjs-block {
-    width: auto;
-    height: auto;
-    min-height: auto;
-}
+    #gjs {
+        border: 3px solid #444;
+    }
 
-.panel__top {
-    padding: 0;
-    width: 100%;
-    display: flex;
-    position: initial;
-    justify-content: space-between;
-}
+    .gjs-pn-btn {
+        @apply flex items-center justify-center mx-1;
+    }
 
-.panel__basic-actions, .panel__switcher, .panel__devices {
-    position: initial;
-}
+    /* Reset some default styling */
 
-.editor-row {
-    display: flex;
-    justify-content: flex-start;
-    align-items: stretch;
-    flex-wrap: nowrap;
-}
+    .gjs-cv-canvas {
+        top: 0;
+        width: 100%;
+        height: 100%;
+    }
 
-.editor-canvas {
-    flex-grow: 1;
-}
+    .gjs-block {
+        width: auto;
+        height: auto;
+        min-height: auto;
+    }
 
-.panel__right {
-    width: 230px;
-    position: relative;
-    left: 0 !important;
-    overflow-y: auto;
+    .panel__basic-actions, .panel__switcher, .panel__devices {
+        position: initial;
+    }
+
+    .editor-row {
+        display: flex;
+        justify-content: flex-start;
+        align-items: stretch;
+        flex-wrap: nowrap;
+    }
+
+    .editor-canvas {
+        flex-grow: 1;
+    }
+
+    .panel__right {
+        width: 300px;
+        position: relative;
+        left: 0 !important;
+        overflow-y: auto;
+    }
+
+    & select {
+        @apply px-2;
+        background-image: none !important;
+
+        & option {
+            @apply truncate;
+        }
+    }
+
+    .layers-container {
+        .gjs-layer-name {
+            line-height: 1;
+        }
+
+        .gjs-layer-count {
+            @apply hidden;
+        }
+
+        .gjs-layer-move {
+            @apply top-1/2 -translate-y-1/2 p-2;
+        }
+
+        .gjs-layer-vis {
+            @apply top-1 p-2;
+        }
+
+        .gjs-layer-title {
+            @apply pr-6 py-2;
+        }
+    }
+
+    .styles-container, .layers-container, .blocks-container, .traits-container {
+        @apply overflow-auto;
+        max-height: calc(100vh - 4rem);
+
+        &::-webkit-scrollbar {
+            @apply w-2 pl-2;
+        }
+
+        &::-webkit-scrollbar-track {
+            @apply bg-gray-500 rounded-full;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            @apply bg-gray-200 rounded-full;
+        }
+
+        &::-webkit-scrollbar-thumb:hover {
+            @apply bg-gray-400;
+        }
+    }
+
+    .styles-container {
+        @apply flex flex-col-reverse transition-all duration-300;
+    }
+
+    .gjs-blocks-c {
+        @apply grid grid-cols-2;
+    }
+
+    .sp-palette-container {
+        @apply cursor-move;
+    }
 }

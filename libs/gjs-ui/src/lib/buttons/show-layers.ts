@@ -1,11 +1,11 @@
 import Button from "@grapesjs/panels/model/Button";
-import { UiCommandNames } from "../commands";
+import { SHOW_LAYERS, UiCommandNames } from "../commands";
 
 export const ShowLayersButton: Button = {
-	id:      "show-layers",
-	active:  true,
+	id:      SHOW_LAYERS,
+	active:  false,
 	label:   `<i class="ti ti-box-multiple"></i>`,
-	command: "ui.show-layers",
+	command: SHOW_LAYERS,
 	// Once activated disable the possibility to turn it off
 	togglable: false,
 } as Button & { label: string, command: UiCommandNames };

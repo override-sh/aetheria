@@ -1,0 +1,1 @@
+export const explodeClasses = (classes: string): string[] => classes.split(" ");

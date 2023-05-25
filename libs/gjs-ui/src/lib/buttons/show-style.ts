@@ -1,10 +1,10 @@
 import Button from "@grapesjs/panels/model/Button";
-import { UiCommandNames } from "../commands";
+import { SHOW_STYLES, UiCommandNames } from "../commands";
 
 export const ShowStyleButton: Button = {
-	id:        "show-style",
-	active:    true,
+	id:        SHOW_STYLES,
+	active:    false,
 	label:     `<i class="ti ti-brush"></i>`,
-	command:   "ui.show-styles",
+	command:   SHOW_STYLES,
 	togglable: false,
 } as Button & { label: string, command: UiCommandNames };

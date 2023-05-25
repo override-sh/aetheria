@@ -1,5 +1,6 @@
 import Panel from "@grapesjs/panels/model/Panel";
 import { ShowLayersButton, ShowStyleButton, ShowTraitsButton } from "../buttons";
+import { ShowBlocksButton } from "../buttons/show-blocks";
 
 export const PanelSwitcherPanel: Panel = {
 	id: "panel-switcher",
@@ -12,5 +13,6 @@ export const PanelSwitcherPanel: Panel = {
 		ShowLayersButton,
 		ShowStyleButton,
 		ShowTraitsButton,
+		ShowBlocksButton,
 	],
 };
