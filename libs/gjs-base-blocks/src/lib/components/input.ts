@@ -1,8 +1,11 @@
 import { Editor } from "@grapesjs/index";
 import Component from "@grapesjs/dom_components/model/Component";
 import { GrapesJsUtility } from "@override/utility";
-import { ComponentAttributeChangeHandlerOptions } from "@override/open-press-interfaces";
-import { capitalize } from "@grapesjs/utils/mixins";
+import {
+	ComponentAttributeChangeHandlerOptions,
+	TraitHorizontalSeparatorExtraSettings,
+} from "@override/open-press-interfaces";
+import { TRAIT_HORIZONTAL_SEPARATOR, TRAIT_SECTION_HEADER } from "../../../../gjs-ui/src/lib/traits";
 
 type InputTypes =
 	"text"
@@ -20,11 +23,7 @@ type InputTypes =
 	| "color"
 	| "range"
 	| "file"
-	| "hidden"
-	| "image"
-	| "reset"
-	| "submit"
-	| "button";
+	| "hidden";
 const input_types: InputTypes[] = [
 	"text",
 	"email",
@@ -42,10 +41,6 @@ const input_types: InputTypes[] = [
 	"range",
 	"file",
 	"hidden",
-	"image",
-	"reset",
-	"submit",
-	"button",
 ];
 
 
@@ -66,15 +61,18 @@ export const InputComponent = (editor: Editor) => {
 					name:        "default-name",
 					placeholder: "Insert text here",
 				},
-				traits:     [
-					// common traits
+				traits: [
+					{
+						type:  TRAIT_SECTION_HEADER,
+						label: "General settings",
+					},
 					{
 						type:    "select",
 						name:    "type",
 						default: "text",
 						text:    "text",
 						options: input_types.map((type) => ({
-							name:  capitalize(type),
+							name:  type,
 							value: type,
 						})),
 					},
@@ -93,8 +91,6 @@ export const InputComponent = (editor: Editor) => {
 						type: "checkbox",
 						name: "required",
 					},
-
-					"placeholder",
 					{
 						type:  "number",
 						name:  "maxlength",
@@ -102,12 +98,26 @@ export const InputComponent = (editor: Editor) => {
 						step:  1,
 						label: "Max length",
 					},
-					"pattern",
 					{
 						type:  "checkbox",
-						name:  "multiple",
-						label: "Multiple",
-						text:  "Multiple text",
+						name:  "autofocus",
+						label: "Auto focus",
+					},
+					{
+						type:  "checkbox",
+						name:  "autocomplete",
+						label: "Auto complete",
+					},
+
+					{
+						type:    TRAIT_HORIZONTAL_SEPARATOR,
+						default: {
+							         additional_classes: "mt-4 -mb-2",
+						         } as TraitHorizontalSeparatorExtraSettings,
+					},
+					{
+						type:  TRAIT_SECTION_HEADER,
+						label: "Type specific settings",
 					},
 				],
 			},
@@ -122,9 +132,6 @@ export const InputComponent = (editor: Editor) => {
 				value: InputTypes,
 				options: ComponentAttributeChangeHandlerOptions,
 			) {
-				// whether to reset the attributes
-				// const should_reset = !options.stop_propagation && !options.init;
-
 				GrapesJsUtility.component.addTraitOrReset(
 					this,
 					([
@@ -143,20 +150,116 @@ export const InputComponent = (editor: Editor) => {
 					},
 					options,
 				);
-				/*if ((["text", "search", "tel", "url", "email", "password"] as InputTypes[]).includes(value)) {
-				 this.addTrait({
-				 type:  "number",
-				 name:  "size",
-				 min:   0,
-				 step:  1,
-				 },);
-				 }
-				 if (!options.stop_propagation && !options.init) {
-				 GrapesJsUtility.component.resetAttributes(this, {
-				 multiple: null,
-				 });
-				 this.removeTrait("multiple");
-				 }*/
+
+				GrapesJsUtility.component.addTraitsOrReset(
+					this,
+					([
+						"number",
+						"range",
+					] as InputTypes[]).includes(value),
+					[
+						{
+							type: "number",
+							name: "min",
+							step: 1,
+						},
+						{
+							type: "number",
+							name: "max",
+							step: 1,
+						},
+					],
+					options,
+				);
+
+				GrapesJsUtility.component.addTraitsOrReset(
+					this,
+					([
+						"date",
+						"datetime-local",
+						"month",
+						"week",
+						"time",
+					] as InputTypes[]).includes(value),
+					[
+						{
+							type: "text",
+							name: "min",
+						},
+						{
+							type: "text",
+							name: "max",
+						},
+					],
+					options,
+				);
+
+				GrapesJsUtility.component.addTraitOrReset(
+					this,
+					([
+						"file",
+						"email",
+					] as InputTypes[]).includes(value),
+					{
+						type: "checkbox",
+						name: "multiple",
+					},
+					options,
+				);
+
+				GrapesJsUtility.component.addTraitOrReset(
+					this,
+					([
+						"text",
+						"date",
+						"search",
+						"tel",
+						"url",
+						"email",
+						"password",
+					] as InputTypes[]).includes(value),
+					{
+						type: "text",
+						name: "pattern",
+					},
+					options,
+				);
+
+				GrapesJsUtility.component.addTraitOrReset(
+					this,
+					([
+						"text",
+						"search",
+						"tel",
+						"url",
+						"email",
+						"password",
+					] as InputTypes[]).includes(value),
+					{
+						type: "text",
+						name: "placeholder",
+					},
+					options,
+				);
+
+				GrapesJsUtility.component.addTraitOrReset(
+					this,
+					([
+						"number",
+						"range",
+						"date",
+						"datetime-local",
+						"month",
+						"time",
+						"week",
+					] as InputTypes[]).includes(value),
+					{
+						type: "number",
+						name: "step",
+						min:  0,
+					},
+					options,
+				);
 			},
 		},
 	});

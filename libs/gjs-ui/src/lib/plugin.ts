@@ -15,6 +15,8 @@ import {
 	ShowStylesCommand,
 	ShowTraitsCommand,
 } from "./commands";
+import { TRAIT_HORIZONTAL_SEPARATOR, TRAIT_SECTION_HEADER, TraitSectionHeader } from "./traits";
+import { TraitHorizontalSeparator } from "./traits/orizontal-separator";
 
 export const UiPlugin = (editor: Editor) => {
 	editor.Panels.getPanels()
@@ -30,7 +32,6 @@ export const UiPlugin = (editor: Editor) => {
 		DeviceDesktop,
 		DeviceMobile,
 	]);
-
 
 	const ui_commands = [
 		{
@@ -65,6 +66,29 @@ export const UiPlugin = (editor: Editor) => {
 			},
 		) => {
 			editor.Commands.add(id, command);
+		},
+	);
+
+
+	const ui_traits = [
+		{
+			id:    TRAIT_SECTION_HEADER,
+			trait: TraitSectionHeader,
+		},
+		{
+			id:    TRAIT_HORIZONTAL_SEPARATOR,
+			trait: TraitHorizontalSeparator,
+		},
+	];
+	ui_traits.forEach((
+			{
+				id,
+				trait,
+			},
+		) => {
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore
+			editor.Traits.addType(id, trait);
 		},
 	);
 };

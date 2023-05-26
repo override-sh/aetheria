@@ -4,3 +4,5 @@
 export * from "./lib/filters";
 export * from "./lib/casts";
 export * from "./lib/grapes-js";
+export * from "./lib/html";
+export * from "./lib/array-like";

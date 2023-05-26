@@ -121,6 +121,24 @@ class ComponentUtility {
 			component.removeTrait(trait.name);
 		}
 	}
+
+	/**
+	 * Add a trait to a component or reset it if it already exists
+	 * @param {Component} component Component to add the trait to
+	 * @param {boolean} should_add_trait Whether the trait should be added or not
+	 * @param traits Traits to add
+	 * @param {ComponentAttributeChangeHandlerOptions} options Options
+	 */
+	static addTraitsOrReset(
+		component: Component,
+		should_add_trait: boolean,
+		traits: TraitProperties[],
+		options: ComponentAttributeChangeHandlerOptions,
+	) {
+		traits.forEach((trait) => {
+			ComponentUtility.addTraitOrReset(component, should_add_trait, trait, options);
+		});
+	}
 }
 
 
