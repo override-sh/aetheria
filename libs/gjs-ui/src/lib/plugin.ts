@@ -2,6 +2,8 @@ import { Editor } from "@grapesjs/index";
 import { BasicActions, DevicesPanel, PanelSwitcherPanel, ResizableLayersPanel, TopPanel } from "./panels";
 import { DeviceDesktop, DeviceMobile } from "./devices";
 import {
+	IMPORT_CODE,
+	openImportCodeModal,
 	SET_DEVICE_DESKTOP,
 	SET_DEVICE_MOBILE,
 	SetDeviceDesktopCommand,
@@ -15,8 +17,12 @@ import {
 	ShowStylesCommand,
 	ShowTraitsCommand,
 } from "./commands";
-import { TRAIT_HORIZONTAL_SEPARATOR, TRAIT_SECTION_HEADER, TraitSectionHeader } from "./traits";
-import { TraitHorizontalSeparator } from "./traits/orizontal-separator";
+import {
+	TRAIT_HORIZONTAL_SEPARATOR,
+	TRAIT_SECTION_HEADER,
+	TraitHorizontalSeparator,
+	TraitSectionHeader,
+} from "./traits";
 
 export const UiPlugin = (editor: Editor) => {
 	editor.Panels.getPanels()
@@ -58,6 +64,10 @@ export const UiPlugin = (editor: Editor) => {
 			id:      SET_DEVICE_MOBILE,
 			command: SetDeviceMobileCommand,
 		},
+		{
+			id:      IMPORT_CODE,
+			command: openImportCodeModal,
+		},
 	];
 	ui_commands.forEach((
 			{
@@ -91,4 +101,21 @@ export const UiPlugin = (editor: Editor) => {
 			editor.Traits.addType(id, trait);
 		},
 	);
+
+
+	editor.onReady(() => {
+		editor.Styles.getSector("general")
+		      .addProperty(
+			      {
+				      type:     "number",
+				      default:  "0",
+				      name:     "z-index",
+				      property: "z-index",
+				      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+				      // @ts-ignore
+				      min: 0,
+			      },
+			      {},
+		      );
+	});
 };

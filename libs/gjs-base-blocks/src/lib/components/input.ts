@@ -5,7 +5,7 @@ import {
 	ComponentAttributeChangeHandlerOptions,
 	TraitHorizontalSeparatorExtraSettings,
 } from "@override/open-press-interfaces";
-import { TRAIT_HORIZONTAL_SEPARATOR, TRAIT_SECTION_HEADER } from "../../../../gjs-ui/src/lib/traits";
+import { TRAIT_HORIZONTAL_SEPARATOR, TRAIT_SECTION_HEADER } from "@override/gjs-ui";
 
 type InputTypes =
 	"text"
@@ -77,6 +77,7 @@ export const InputComponent = (editor: Editor) => {
 						})),
 					},
 					"value",
+					"id",
 					"name",
 					{
 						type:  "checkbox",

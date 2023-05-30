@@ -76,6 +76,7 @@ export const useDraggableElement = (
 		},
 		[
 			elements,
+			header_query_selector,
 			move_parent,
 			pos1,
 			pos2,

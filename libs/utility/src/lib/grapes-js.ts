@@ -38,12 +38,16 @@ class ComponentUtility {
 	 * @param {Component} component Component to hook
 	 */
 	static hookAttributesChanges(component: Component) {
-		for (const attribute in component.attributes) {
+		for (const attribute in component.getAttributes({
+			noClass: true,
+			noStyle: true,
+		})) {
 			const handler_name = `handle${capitalize(attribute)}AttributeChange`;
 
 			if (handler_name in component) {
+				console.log("hook applied to", handler_name);
 				component.on(
-					"change:attributes:type",
+					`change:attributes:${attribute}`,
 					ComponentUtility.rejectIdUpdatesMiddleware((component as any)[handler_name]),
 				);
 			}
@@ -57,7 +61,10 @@ class ComponentUtility {
 	 * @param {Component} component Component to run hooks on
 	 */
 	static reInitHookedAttributesChanges(component: Component) {
-		for (const attribute in component.attributes) {
+		for (const attribute in component.getAttributes({
+			noClass: true,
+			noStyle: true,
+		})) {
 			const handler_name = `handle${capitalize(attribute)}AttributeChange`;
 
 			if (handler_name in component) {

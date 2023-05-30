@@ -1,6 +1,12 @@
 import Panel from "@grapesjs/panels/model/Panel";
-import { ViewComponentsButton } from "../buttons";
-import { ExportCodeButton } from "../buttons";
+import {
+	ExportCodeButton,
+	FullscreenButton, ImportCodeButton,
+	PreviewButton,
+	RedoButton,
+	UndoButton,
+	ViewComponentsButton,
+} from "../buttons";
 
 export const BasicActions: Panel = {
 	id: "basic-actions",
@@ -11,6 +17,11 @@ export const BasicActions: Panel = {
 	// @ts-ignore
 	buttons: [
 		ViewComponentsButton,
+		FullscreenButton,
+		PreviewButton,
+		UndoButton,
+		RedoButton,
+		ImportCodeButton,
 		ExportCodeButton,
 	],
 };

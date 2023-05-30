@@ -44,10 +44,10 @@
         flex-grow: 1;
     }
 
-    .panel__right {
+    .panel__left {
         width: 300px;
         position: relative;
-        left: 0 !important;
+    //left: 0 !important; right: 0;
         overflow-y: auto;
     }
 
@@ -70,7 +70,7 @@
         }
 
         .gjs-layer-move {
-            @apply top-1/2 -translate-y-1/2 p-2;
+            @apply top-1 p-2;
         }
 
         .gjs-layer-vis {
@@ -114,4 +114,8 @@
     .sp-palette-container {
         @apply cursor-move;
     }
+}
+
+.container-component:not(:has(> *)):after {
+    content: "test";
 }
