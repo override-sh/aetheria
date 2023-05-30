@@ -22,7 +22,6 @@ export default function Login(): JSX.Element {
 				/>
 			</div>
 			<div className={"col-span-1 bg-gradient-to-r from-secondary-100/70 to-secondary-gray-50 p-4 flex items-center justify-center select-none"}>
-				{/*https://img.logoipsum.com/299.svg*/}
 				<Card size={"small"}>
 					<CardHeader
 						title={"Login"}

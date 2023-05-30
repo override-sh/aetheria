@@ -8,11 +8,11 @@ export default function Layout(
 		login,
 	}: ReactChildren & { dashboard: ReactNode, login: ReactNode },
 ): JSX.Element {
-	const user = {
-		email: "john.doe@example.com",
-	};
+	// const user = {
+	// 	email: "john.doe@example.com",
+	// };
 
-	// const user = null;
+	const user = null;
 
 	return (
 		<main className={"min-h-screen min-w-screen grid grid-cols-2 m-0 p-0 gap-0"}>
