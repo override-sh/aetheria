@@ -21,6 +21,9 @@
 			"@grapesjs/*": [
 				"libs/grapesjs/src/*"
 			],
+			"@override/backend-config": [
+				"libs/backend-config/src/index.ts"
+			],
 			"@override/gjs-base-blocks": [
 				"libs/gjs-base-blocks/src/index.ts"
 			],
@@ -48,7 +51,14 @@
 			"jquery": [
 				"libs/grapesjs/src/utils/cash-dom.ts"
 			]
-		}
+		},
+		"plugins": [
+			{
+				"transform": "typia/lib/transform"
+			}
+		],
+		"strictNullChecks": true,
+		"strict": true
 	},
 	"exclude": [
 		"node_modules",

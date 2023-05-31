@@ -28,7 +28,13 @@
 				"default",
 				"^production",
 				"{workspaceRoot}/jest.preset.js"
-			]
+			],
+			"options": {
+				"codeCoverage": true,
+				"coverageReporters": [
+					"text"
+				]
+			}
 		},
 		"e2e": {
 			"inputs": [

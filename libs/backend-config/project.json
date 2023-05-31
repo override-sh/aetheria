@@ -1,7 +1,7 @@
 {
-	"name": "gjs-ui",
+	"name": "backend-config",
 	"$schema": "../../node_modules/nx/schemas/project-schema.json",
-	"sourceRoot": "libs/gjs-ui/src",
+	"sourceRoot": "libs/backend-config/src",
 	"projectType": "library",
 	"targets": {
 		"lint": {
@@ -11,7 +11,7 @@
 			],
 			"options": {
 				"lintFilePatterns": [
-					"libs/gjs-ui/**/*.{ts,tsx,js,jsx}"
+					"libs/backend-config/**/*.ts"
 				]
 			}
 		},
@@ -21,18 +21,25 @@
 				"{workspaceRoot}/coverage/{projectRoot}"
 			],
 			"options": {
-				"jestConfig": "libs/gjs-ui/jest.config.ts",
-				"passWithNoTests": true
+				"jestConfig": "libs/backend-config/jest.config.ts",
+				"passWithNoTests": true,
+				"codeCoverage": true,
+				"coverageReporters": [
+					"text"
+				]
 			},
 			"configurations": {
 				"ci": {
 					"ci": true,
-					"codeCoverage": true
+					"codeCoverage": true,
+					"coverageReporters": [
+						"text"
+					]
 				}
 			}
 		}
 	},
 	"tags": [
-		"scope:front-end"
+		"scope:backend"
 	]
 }

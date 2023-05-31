@@ -7,3 +7,5 @@ export * from "./lib/navigation";
 export * from "./lib/nullable-html-element";
 export * from "./lib/gjs";
 export * from "./lib/generic-object";
+export * from "./lib/extensibility";
+export * from "./lib/configuration";

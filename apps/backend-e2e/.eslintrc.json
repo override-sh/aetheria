@@ -1,0 +1,22 @@
+{
+	"extends": [
+		"../../.eslintrc.json"
+	],
+	"ignorePatterns": [
+		"!**/*"
+	],
+	"overrides": [
+		{
+			"files": [
+				"*.ts",
+				"*.tsx",
+				"*.js",
+				"*.jsx"
+			],
+			"rules": {}
+		}
+	],
+	"rules": {
+		"no-mixed-spaces-and-tabs": "off"
+	}
+}

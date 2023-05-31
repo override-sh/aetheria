@@ -5,3 +5,4 @@ export * from "./lib/casts";
 export * from "./lib/casts";
 export * from "./lib/html";
 export * from "./lib/array-like";
+export * from "./lib/extensibility";
