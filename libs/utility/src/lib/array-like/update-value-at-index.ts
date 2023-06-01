@@ -1,5 +1,5 @@
 /**
- * @description Update the value of an array at a specific index
+ * @description Update the value of an array at a specific index and return the updated array.
  * @template Type The type of the array
  * @param {Type[]} array The array to update
  * @param {number} index The index to update

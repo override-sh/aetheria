@@ -12,10 +12,18 @@ export class EnvValidation
 	extends Hookable<EnvValidationHooksCallback> {
 	private static _instance: EnvValidation;
 	private config_file_filters: RegExp[] = [];
+	private resolution_paths: string[] = [];
 
 	private constructor() {
 		super();
-		this.addConfigFileFilter(/\.config\.(ts|js)$/);
+		this.addConfigFileFilters([
+			/\.config\.(ts|js)$/,
+		]);
+
+		this.addResolutionPaths([
+			__dirname,
+			resolve(__dirname, ".."),
+		]);
 	}
 
 	/**
@@ -34,6 +42,45 @@ export class EnvValidation
 		return this.config_file_filters;
 	}
 
+	public get resolutionPaths(): string[] {
+		return this.resolution_paths;
+	}
+
+	/**
+	 * @description Add a resolution path to the list of path loading validation schemas.
+	 * @param {string} path The path to add.
+	 * @returns {EnvValidation} The EnvValidation instance.
+	 */
+	public addResolutionPath(path: string): EnvValidation {
+		this.resolution_paths.push(path);
+		return this;
+	}
+
+	/**
+	 * @description Add a resolution path to the list of path loading validation schemas.
+	 * @param {string[]} paths The paths to add.
+	 * @returns {EnvValidation} The EnvValidation instance.
+	 */
+	public addResolutionPaths(paths: string[]): EnvValidation {
+		paths.forEach(path => this.addResolutionPath(path));
+		return this;
+	}
+
+	/**
+	 * @description Remove a resolution path from the list of path loading validation schemas.
+	 * @param {string} path The path to remove.
+	 * @returns {EnvValidation} The EnvValidation instance.
+	 */
+	public removeResolutionPath(path: string): EnvValidation {
+		this.resolution_paths = this.resolution_paths.filter(p => p !== path);
+		return this;
+	}
+
+	public clearResolutionPaths(): EnvValidation {
+		this.resolution_paths = [];
+		return this;
+	}
+
 	/**
 	 * @description This function will add a config file filter.
 	 * @param {RegExp} filter The filter to add.
@@ -41,6 +88,16 @@ export class EnvValidation
 	 */
 	public addConfigFileFilter(filter: RegExp): EnvValidation {
 		this.config_file_filters.push(filter);
+		return this;
+	}
+
+	/**
+	 * @description This function will add a config file filter.
+	 * @param filters The filters to add.
+	 * @returns {EnvValidation} The EnvValidation instance.
+	 */
+	public addConfigFileFilters(filters: RegExp[]): EnvValidation {
+		filters.forEach(filter => this.addConfigFileFilter(filter));
 		return this;
 	}
 
@@ -111,20 +168,24 @@ export class EnvValidation
 	 * @returns {Joi.ObjectSchema[]} The list of validation schemas.
 	 */
 	private resolveConfigValidationSchema(): Joi.ObjectSchema[] {
-		const cwd = resolve(__dirname);
-		const config_files = readdirSync(cwd)
-			.filter(value => this.passesConfigFileFilters(value));
+		return this.resolution_paths
+		           .map(path => {
+			           const cwd = resolve(path);
+			           const config_files = readdirSync(cwd)
+				           .filter(value => this.passesConfigFileFilters(value));
 
-		this.fire(ENV_VALIDATION_HOOK.configuration_resolved_files, { files: config_files });
+			           this.fire(ENV_VALIDATION_HOOK.configuration_resolved_files, { files: config_files });
 
-		return tap(
-			config_files.map(file => require(resolve(cwd, file)))
-			            .map(config => config.validationSchema || null)
-			            .filter(schema => schema !== null) as Joi.ObjectSchema[],
-			schemas => {
-				this.fire(ENV_VALIDATION_HOOK.configuration_loaded_schemas, { schemas });
-			},
-		);
+			           return tap(
+				           config_files.map(file => require(resolve(cwd, file)))
+				                       .map(config => config.validationSchema || null)
+				                       .filter(schema => schema !== null) as Joi.ObjectSchema[],
+				           schemas => {
+					           this.fire(ENV_VALIDATION_HOOK.configuration_loaded_schemas, { schemas });
+				           },
+			           );
+		           })
+		           .flat();
 	}
 
 	/**

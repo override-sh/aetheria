@@ -1,9 +1,9 @@
 import "server-only";
 
 /**
- * @description This is the interface of the config object that will be loaded in the ConfigModule.
+ * @description This is the interface of the database connection object.
  */
-export interface IDatabaseConfig {
+export interface IDatabaseConnection {
 	/**
 	 * @description The host of the database.
 	 */
@@ -28,4 +28,11 @@ export interface IDatabaseConfig {
 	 * @description The name of the database.
 	 */
 	database?: string;
+}
+
+/**
+ * @description This is the interface of the config object that will be loaded in the ConfigModule.
+ */
+export interface IDatabaseConfig {
+	[x: string]: IDatabaseConnection;
 }

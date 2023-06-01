@@ -126,7 +126,7 @@ export abstract class Hookable<
 	 * @param args The arguments to pass to the hook.
 	 * @returns {Hookable} The hookable object.
 	 */
-	public trigger(
+	protected trigger(
 		hook: HookName,
 		args: object,
 	): Hookable<FunctionTypeObject, HookName> {
@@ -143,10 +143,11 @@ export abstract class Hookable<
 	 * @param args The arguments to pass to the hook.
 	 * @returns {Hookable} The hookable object.
 	 */
-	public emit(
+	protected emit(
 		hook: HookName,
 		args: object,
 	): Hookable<FunctionTypeObject, HookName> {
+		/* istanbul ignore next */
 		return this.trigger(hook, args);
 	}
 
@@ -156,7 +157,7 @@ export abstract class Hookable<
 	 * @param args The arguments to pass to the hook.
 	 * @returns {Hookable} The hookable object.
 	 */
-	public fire(
+	protected fire(
 		hook: HookName,
 		args: object,
 	): Hookable<FunctionTypeObject, HookName> {

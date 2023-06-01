@@ -1,5 +1,7 @@
 "use client";
 
+/* istanbul ignore file */
+
 import { useEffect, useState } from "react";
 
 export const useScrollPosition = () => {

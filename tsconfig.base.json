@@ -42,6 +42,12 @@
 			"@override/open-press-interfaces": [
 				"libs/open-press-interfaces/src/index.ts"
 			],
+			"@override/open-press-models": [
+				"libs/open-press-models/src/index.ts"
+			],
+			"@override/open-press-support": [
+				"libs/open-press-support/src/index.ts"
+			],
 			"@override/utility": [
 				"libs/utility/src/index.ts"
 			],

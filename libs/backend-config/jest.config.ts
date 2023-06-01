@@ -15,4 +15,5 @@ export default {
 		"html",
 	],
 	coverageDirectory:    "../../coverage/libs/backend-config",
+
 };

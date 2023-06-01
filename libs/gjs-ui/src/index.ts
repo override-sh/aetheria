@@ -1,3 +1,5 @@
+"use client";
+
 export * from "./lib/plugin";
 export * from "./lib/traits";
 export * from "./lib/devices";

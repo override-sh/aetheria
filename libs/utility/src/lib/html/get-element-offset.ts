@@ -1,3 +1,7 @@
+"use client";
+
+/* istanbul ignore file */
+
 /**
  * @description Get the offset of an element
  * @param {HTMLElement} element The element to get the offset of

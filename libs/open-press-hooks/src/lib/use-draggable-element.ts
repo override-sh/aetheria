@@ -1,3 +1,7 @@
+"use client";
+
+/* istanbul ignore file */
+
 import { DragEvent, useCallback, useEffect, useState } from "react";
 import { getCurrentEventSelector, getElementOffset, updateValueAtIndex } from "@override/utility";
 

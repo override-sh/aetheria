@@ -2,6 +2,8 @@ import { ConfigType, registerAs } from "@nestjs/config";
 import * as Joi from "joi";
 import { IDatabaseConfig } from "@override/open-press-interfaces";
 
+/* istanbul ignore file */
+
 /**
  * @description This is the callback that will be used to load the config object in the ConfigModule.
  * @example
@@ -14,12 +16,23 @@ import { IDatabaseConfig } from "@override/open-press-interfaces";
  * @type {(() => IDatabaseConfig) & ConfigFactoryKeyHost<ReturnType<() => IDatabaseConfig>>}
  */
 export const databaseConfig = registerAs("database", (): IDatabaseConfig => ({
-	host:     process.env["DB_HOST"],
-	port:     parseInt(process.env["DB_PORT"] || "27017"),
-	username: process.env["DB_USERNAME"],
-	password: process.env["DB_PASSWORD"],
-	database: process.env["DB_DATABASE"],
+	[DATABASE_CONNECTIONS.default]: {
+		host:     process.env["DB_HOST"],
+		port:     +(process.env["DB_PORT"] || "27017"),
+		username: process.env["DB_USERNAME"],
+		password: process.env["DB_PASSWORD"],
+		database: process.env["DB_DATABASE"],
+	},
 }));
+
+/**
+ * @description A list of all the connections that are available.
+ */
+export type DatabaseConnections = keyof DatabaseConfig;
+
+export const DATABASE_CONNECTIONS = {
+	default: "default",
+} as const;
 
 /**
  * @description This is the key that will be used to inject the config object in modules.

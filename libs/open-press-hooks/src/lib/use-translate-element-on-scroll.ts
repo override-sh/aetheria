@@ -1,5 +1,7 @@
 "use client";
 
+/* istanbul ignore file */
+
 import { useScrollPosition } from "./use-scroll-position";
 import { useEffect } from "react";
 

@@ -1,3 +1,7 @@
+"use client";
+
+/* istanbul ignore file */
+
 import Component from "@grapesjs/dom_components/model/Component";
 import {
 	ComponentAttributeChangeHandler,
@@ -7,6 +11,9 @@ import {
 import { capitalize } from "@grapesjs/utils/mixins";
 import { TraitProperties } from "@grapesjs/trait_manager/model/Trait";
 
+/**
+ * Utility class for components in grapesjs
+ */
 class ComponentUtility {
 	/**
 	 * Functional middleware to reject `idUpdate` events in component attributes
@@ -148,7 +155,13 @@ class ComponentUtility {
 	}
 }
 
-
+/**
+ * Utility class for grapesjs
+ */
 export class GrapesJsUtility {
+	/**
+	 * Component utility
+	 * @type {ComponentUtility}
+	 */
 	public static component = ComponentUtility;
 }

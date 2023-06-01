@@ -1,3 +1,7 @@
+"use client";
+
+/* istanbul ignore file */
+
 /**
  * Get current event selector
  * @param {Event} event The event
