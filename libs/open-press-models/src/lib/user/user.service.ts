@@ -19,7 +19,7 @@ export class UserService {
 	 * @param {CreateUserDTO} user The user to create.
 	 * @returns {Promise<User>} The created user.
 	 */
-	public async create(user: CreateUserDTO) {
+	public async create(user: CreateUserDTO): Promise<UserDocument> {
 		const created_user = new this.model(user);
 
 		if (await this.emailExists(user.email)) {
@@ -29,7 +29,7 @@ export class UserService {
 		created_user.created_at = created_user.updated_at = DateTime.now();
 		created_user.password = await this.hash_service.make(user.password);
 
-		return await created_user.save();
+		return created_user.save();
 	}
 
 	/**
@@ -39,9 +39,9 @@ export class UserService {
 	 * @returns {Promise<User>} The updated user.
 	 */
 	public async update(
-		user: string | UserModel | null,
+		user: string | UserModel | UserDocument | null,
 		update: UpdateUserDTO,
-	): Promise<User> {
+	): Promise<UserDocument> {
 		// if the user is a string, we need to find it
 		if (this.isUserIdentifier(user)) {
 			user = await this.model.findById(user);
@@ -52,6 +52,7 @@ export class UserService {
 			throw UserNotFoundError.make();
 		}
 
+    console.log(update, await this.emailExists(update.email || ""))
 		// if the update has an email and it's not the same as the user's email, check if it exists
 		if (update.email && update.email !== user.email && await this.emailExists(update.email)) {
 			throw VerificationEmailSentError.make();
@@ -63,9 +64,9 @@ export class UserService {
 		}
 
 		return user.updateOne({
-			...update,
-			updated_at: DateTime.now(),
-		});
+      ...update,
+      updated_at: DateTime.now(),
+    });
 	}
 
 	/**
