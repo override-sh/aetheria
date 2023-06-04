@@ -2,7 +2,7 @@ import { ExtractJwt, Strategy } from "passport-jwt";
 import { PassportStrategy } from "@nestjs/passport";
 import { Inject, Injectable } from "@nestjs/common";
 import { AUTH_CONFIG_KEY, AuthConfig } from "@override/backend-config";
-import { UserService } from "@override/open-press-models";
+import { UserDocument, UserService } from "@override/open-press-models";
 
 @Injectable()
 export class JwtStrategy
@@ -23,7 +23,12 @@ export class JwtStrategy
 		});
 	}
 
-	async validate(payload: any) {
+	/**
+	 * This method is called by Passport when a JWT is provided.
+	 * @param payload The payload of the JWT.
+	 * @returns {Promise<UserDocument>} The user document.
+	 */
+	async validate(payload: any): Promise<UserDocument> {
 		return this.user_service.find(payload.sub);
 	}
 }
