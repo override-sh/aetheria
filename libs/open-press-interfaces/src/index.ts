@@ -9,3 +9,4 @@ export * from "./lib/gjs";
 export * from "./lib/generic-object";
 export * from "./lib/extensibility";
 export * from "./lib/configuration";
+export * from "./lib/mongose-id";

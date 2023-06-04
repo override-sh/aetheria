@@ -6,14 +6,17 @@ import { JwtStrategy, LocalStrategy } from "./strategies";
 import { AuthController } from "./auth.controller";
 import { JwtModule, JwtModuleOptions } from "@nestjs/jwt";
 import { AUTH_CONFIG_KEY, AuthConfig } from "@override/backend-config";
+import { ExtendibilityModule } from "@override/open-press-support";
 
 @Module({
-	imports:     [
+	imports: [
+		ExtendibilityModule,
 		UserModelModule,
 		PassportModule,
 		JwtModule.registerAsync({
 			inject:     [AUTH_CONFIG_KEY],
 			useFactory: (auth_config: AuthConfig): JwtModuleOptions => {
+				// If the encryption is symmetric, then we use the secret key.
 				if (auth_config.jwt.encryption === "symmetric") {
 					return {
 						secret:      auth_config.jwt.secret,
@@ -25,6 +28,7 @@ import { AUTH_CONFIG_KEY, AuthConfig } from "@override/backend-config";
 						},
 					};
 				}
+				// If the encryption is asymmetric, then we use the public and private keys.
 				else {
 					return {
 						publicKey:   auth_config.jwt.public_key,
