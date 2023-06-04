@@ -1,4 +1,4 @@
-import { HookConfiguration } from "@override/open-press-interfaces";
+import { HookConfiguration, IHookable } from "@override/open-press-interfaces";
 
 /**
  * @description This class is used to add hooks to a class.
@@ -25,7 +25,8 @@ export abstract class Hookable<
 		[key: string | number | symbol]: (data: any) => void
 	},
 	HookName extends keyof FunctionTypeObject = keyof FunctionTypeObject,
-> {
+>
+	implements IHookable<FunctionTypeObject, HookName> {
 	protected hooks = {} as { [key in HookName]: (FunctionTypeObject[HookName])[] };
 
 	/**
