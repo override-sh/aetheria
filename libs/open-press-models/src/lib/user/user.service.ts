@@ -39,17 +39,13 @@ export class UserService {
 	 * @returns {Promise<UserDocument>} The updated user.
 	 */
 	public async update(
-		user: string | UserDocument | null,
+		user: string | UserDocument,
 		update: UpdateUserDTO,
 	): Promise<UserDocument> {
 		// if the user is a string, we need to find it
+		// internally handled the case the user id is invalid
 		if (this.isUserIdentifier(user)) {
 			user = await this.find(user);
-		}
-
-		// if the user is null, fail fast
-		if (!this.isUser(user)) {
-			throw UserNotFoundErrorFactory.make();
 		}
 
 		// if the update has an email and it's not the same as the user's email, check if it exists
@@ -73,15 +69,11 @@ export class UserService {
 	 * @param {string | UserDocument | null} user The user to find.
 	 * @returns {Promise<UserDocument>} The deleted user.
 	 */
-	public async delete(user: string | UserDocument | null): Promise<UserDocument> {
+	public async delete(user: string | UserDocument): Promise<UserDocument> {
 		// if the user is a string, we need to find it
+		// internally handled the case the user id is invalid
 		if (this.isUserIdentifier(user)) {
 			user = await this.find(user);
-		}
-
-		// if the user is null, fail fast
-		if (!this.isUser(user)) {
-			throw UserNotFoundErrorFactory.make();
 		}
 
 		return user.deleteOne();
@@ -145,22 +137,12 @@ export class UserService {
 	}
 
 	/**
-	 * @description This method will check if the user is a user model.
-	 * @param {string | UserDocument | null} user The user to check.
-	 * @returns {user is UserDocument} Whether the user is a user model.
-	 * @private
-	 */
-	private isUser(user: string | UserDocument | null): user is UserDocument {
-		return user instanceof this.model;
-	}
-
-	/**
 	 * @description This method will check if the user is a user identifier.
-	 * @param {string | UserDocument | null} user The user to check.
+	 * @param {string | UserDocument} user The user to check.
 	 * @returns {user is string} Whether the user is a user identifier.
 	 * @private
 	 */
-	private isUserIdentifier(user: string | UserDocument | null): user is string {
+	private isUserIdentifier(user: string | UserDocument): user is string {
 		return typeof user === "string";
 	}
 
