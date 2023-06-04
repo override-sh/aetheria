@@ -20,11 +20,11 @@ export class UserService {
 	 * @returns {Promise<UserDocument>} The created user.
 	 */
 	public async create(user: CreateUserDTO): Promise<UserDocument> {
-		const created_user = new this.model(user);
-
 		if (await this.emailExists(user.email)) {
 			throw VerificationEmailSentErrorFactory.make();
 		}
+
+		const created_user = new this.model(user);
 
 		created_user.created_at = created_user.updated_at = DateTime.now();
 		created_user.password = await this.hash_service.make(user.password);
@@ -44,7 +44,7 @@ export class UserService {
 	): Promise<UserDocument> {
 		// if the user is a string, we need to find it
 		if (this.isUserIdentifier(user)) {
-			user = await this.model.findById(user);
+			user = await this.find(user);
 		}
 
 		// if the user is null, fail fast
@@ -74,7 +74,7 @@ export class UserService {
 	public async delete(user: string | UserDocument | null): Promise<UserDocument> {
 		// if the user is a string, we need to find it
 		if (this.isUserIdentifier(user)) {
-			user = await this.model.findById(user);
+			user = await this.find(user);
 		}
 
 		// if the user is null, fail fast
