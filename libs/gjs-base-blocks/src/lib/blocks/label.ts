@@ -1,4 +1,4 @@
-import { Editor } from "@grapesjs/index";
+import { Editor } from "grapesjs";
 import { makeBlockLabel } from "./label-factory";
 import { explodeClasses } from "@override/utility";
 

@@ -1,4 +1,4 @@
-import Panel from "@grapesjs/panels/model/Panel";
+import { Panel } from "grapesjs";
 import { DeviceDesktopButton, DeviceMobileButton } from "../buttons";
 
 export const DevicesPanel: Panel = {

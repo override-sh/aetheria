@@ -1,4 +1,4 @@
-import { Editor } from "@grapesjs/index";
+import { Editor } from "grapesjs";
 import { explodeClasses } from "@override/utility";
 
 export const ContainerComponent = (editor: Editor) => {

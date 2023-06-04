@@ -2,14 +2,13 @@
 
 /* istanbul ignore file */
 
-import Component from "@grapesjs/dom_components/model/Component";
+import { Component, TraitProperties } from "grapesjs";
 import {
 	ComponentAttributeChangeHandler,
 	ComponentAttributeChangeHandlerOptions,
 	GenericObject,
 } from "@override/open-press-interfaces";
-import { capitalize } from "@grapesjs/utils/mixins";
-import { TraitProperties } from "@grapesjs/trait_manager/model/Trait";
+import { capitalize } from "lodash";
 
 /**
  * Utility class for components in grapesjs

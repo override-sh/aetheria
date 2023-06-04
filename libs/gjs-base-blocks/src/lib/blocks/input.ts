@@ -1,4 +1,4 @@
-import { Editor } from "@grapesjs/index";
+import { Editor } from "grapesjs";
 import { makeBlockLabel } from "./label-factory";
 
 export const InputBlock = (editor: Editor) => {

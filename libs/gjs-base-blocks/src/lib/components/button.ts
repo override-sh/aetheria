@@ -1,4 +1,4 @@
-import { Editor } from "@grapesjs/index";
+import { Editor } from "grapesjs";
 import { TRAIT_SECTION_HEADER } from "@override/gjs-ui";
 import { explodeClasses } from "@override/utility";
 

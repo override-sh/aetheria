@@ -1,4 +1,4 @@
-import Button from "@grapesjs/panels/model/Button";
+import { Button } from "grapesjs";
 import { UiCommandNames } from "../commands";
 
 export const DeviceDesktopButton: Button = {

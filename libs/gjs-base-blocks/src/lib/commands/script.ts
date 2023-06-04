@@ -1,10 +1,9 @@
-import { CommandObject } from "@grapesjs/commands/view/CommandAbstract";
-import Component from "@grapesjs/dom_components/model/Component";
 import { EditorView } from "@codemirror/view";
 import { EditorState } from "@codemirror/state";
 import { darcula } from "@uiw/codemirror-theme-darcula";
 import { javascript } from "@codemirror/lang-javascript";
 import { basicSetup } from "codemirror";
+import { CommandObject, Component } from "grapesjs";
 
 export interface OpenScriptEditorModalOptions {
 	component?: Component;

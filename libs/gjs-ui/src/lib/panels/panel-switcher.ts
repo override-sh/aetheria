@@ -1,4 +1,4 @@
-import Panel from "@grapesjs/panels/model/Panel";
+import { Panel } from "grapesjs";
 import { ShowLayersButton, ShowStyleButton, ShowTraitsButton } from "../buttons";
 import { ShowBlocksButton } from "../buttons/show-blocks";
 
