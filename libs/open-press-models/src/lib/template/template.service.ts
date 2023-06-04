@@ -3,8 +3,8 @@ import { InjectModel } from "@nestjs/mongoose";
 import { DATABASE_CONNECTIONS } from "@override/backend-config";
 import { Template, TemplateDocument, TemplateModel } from "./template.schema";
 import { CreateTemplateDTO, UpdateTemplateDTO } from "./template.dto";
-import { TemplateNameAlreadyUsedErrorFactory } from "./errors";
-import { TemplateNotFoundErrorFactory } from "./errors/template-not-found";
+import { TemplateNameAlreadyUsedErrorFactory, TemplateNotFoundErrorFactory } from "./errors";
+import { DateTime } from "luxon";
 
 @Injectable()
 export class TemplateService {
@@ -24,6 +24,8 @@ export class TemplateService {
 
 		const document = new this.model(template);
 
+		document.created_at = document.updated_at = DateTime.now();
+
 		return document.save();
 	}
 
@@ -38,13 +40,9 @@ export class TemplateService {
 		update: UpdateTemplateDTO,
 	): Promise<TemplateDocument> {
 		// if the template is a string, we need to find it
+		// internally handled the case the template id is invalid
 		if (this.isTemplateIdentifier(template)) {
 			template = await this.find(template);
-		}
-
-		// if the template is null, fail fast
-		if (!this.isTemplate(template)) {
-			throw TemplateNotFoundErrorFactory.make();
 		}
 
 		// if the update has a name and it's not the same as the template's name, check if it exists
@@ -53,6 +51,8 @@ export class TemplateService {
 		}
 
 		template.$set(update);
+		template.updated_at = DateTime.now();
+
 		return template.save();
 	}
 
@@ -63,13 +63,9 @@ export class TemplateService {
 	 */
 	public async delete(template: string | TemplateDocument): Promise<TemplateDocument> {
 		// if the template is a string, we need to find it
+		// internally handled the case the template id is invalid
 		if (this.isTemplateIdentifier(template)) {
 			template = await this.find(template);
-		}
-
-		// if the template is null, fail fast
-		if (!this.isTemplate(template)) {
-			throw TemplateNotFoundErrorFactory.make();
 		}
 
 		return template.deleteOne();
@@ -121,16 +117,6 @@ export class TemplateService {
 	 */
 	private async exists(name: string): Promise<boolean> {
 		return await this.model.exists({ name }) !== null;
-	}
-
-	/**
-	 * Check if a template is a TemplateDocument.
-	 * @param {string | TemplateDocument | null} template - Template to check.
-	 * @returns {template is TemplateDocument} - True if the template is a TemplateDocument, false otherwise.
-	 * @private
-	 */
-	private isTemplate(template: string | TemplateDocument | null): template is TemplateDocument {
-		return template instanceof this.model;
 	}
 
 	/**
