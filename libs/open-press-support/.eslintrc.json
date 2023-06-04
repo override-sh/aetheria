@@ -29,5 +29,8 @@
 			],
 			"rules": {}
 		}
-	]
+	],
+	"rules": {
+		"no-mixed-spaces-and-tabs": "off"
+	}
 }
