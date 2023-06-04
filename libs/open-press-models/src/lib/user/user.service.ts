@@ -63,6 +63,8 @@ export class UserService {
 		}
 
 		user.$set(update);
+		user.updated_at = DateTime.now();
+
 		return user.save();
 	}
 
