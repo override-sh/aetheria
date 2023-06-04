@@ -4,7 +4,7 @@ import { BaseError, BaseErrorType } from "@override/open-press-support";
  * User not found error
  */
 @BaseError
-export class UserNotFoundErrorClass
+export class UserNotFoundError
 	extends Error {
 	constructor() {
 		super("User not found");
@@ -13,6 +13,6 @@ export class UserNotFoundErrorClass
 
 /**
  * @description This class represents a user not found error.
- * @type {BaseErrorType<UserNotFoundErrorClass>}
+ * @type {BaseErrorType<UserNotFoundError>}
  */
-export const UserNotFoundError = UserNotFoundErrorClass as BaseErrorType<UserNotFoundErrorClass>;
+export const UserNotFoundErrorFactory = UserNotFoundError as BaseErrorType<UserNotFoundError>;

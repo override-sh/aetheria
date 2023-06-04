@@ -5,7 +5,7 @@ import { DATABASE_CONNECTIONS } from "@override/backend-config";
 import { DateTime } from "luxon";
 import { HashService } from "@override/open-press-support";
 import { CreateUserDTO, UpdateUserDTO } from "./user.dto";
-import { UserNotFoundError, VerificationEmailSentError } from "./errors";
+import { UserNotFoundErrorFactory, VerificationEmailSentErrorFactory } from "./errors";
 
 @Injectable()
 export class UserService {
@@ -17,13 +17,13 @@ export class UserService {
 	/**
 	 * @description This method will create a new user in the database.
 	 * @param {CreateUserDTO} user The user to create.
-	 * @returns {Promise<User>} The created user.
+	 * @returns {Promise<UserDocument>} The created user.
 	 */
 	public async create(user: CreateUserDTO): Promise<UserDocument> {
 		const created_user = new this.model(user);
 
 		if (await this.emailExists(user.email)) {
-			throw VerificationEmailSentError.make();
+			throw VerificationEmailSentErrorFactory.make();
 		}
 
 		created_user.created_at = created_user.updated_at = DateTime.now();
@@ -34,12 +34,12 @@ export class UserService {
 
 	/**
 	 * @description This method will find a user by their id or object and update it.
-	 * @param {string | UserModel | null} user The user to find.
+	 * @param {string | UserDocument | null} user The user to find.
 	 * @param {UpdateUserDTO} update The update to apply.
-	 * @returns {Promise<User>} The updated user.
+	 * @returns {Promise<UserDocument>} The updated user.
 	 */
 	public async update(
-		user: string | UserModel | UserDocument | null,
+		user: string | UserDocument | null,
 		update: UpdateUserDTO,
 	): Promise<UserDocument> {
 		// if the user is a string, we need to find it
@@ -49,13 +49,12 @@ export class UserService {
 
 		// if the user is null, fail fast
 		if (!this.isUser(user)) {
-			throw UserNotFoundError.make();
+			throw UserNotFoundErrorFactory.make();
 		}
 
-    console.log(update, await this.emailExists(update.email || ""))
 		// if the update has an email and it's not the same as the user's email, check if it exists
 		if (update.email && update.email !== user.email && await this.emailExists(update.email)) {
-			throw VerificationEmailSentError.make();
+			throw VerificationEmailSentErrorFactory.make();
 		}
 
 		// if the update has a password, hash it
@@ -63,18 +62,16 @@ export class UserService {
 			update.password = await this.hash_service.make(update.password);
 		}
 
-		return user.updateOne({
-      ...update,
-      updated_at: DateTime.now(),
-    });
+		user.$set(update);
+		return user.save();
 	}
 
 	/**
 	 * @description This method will find a user by their id or object and delete it.
-	 * @param {string | UserModel | null} user The user to find.
-	 * @returns {Promise<User>} The deleted user.
+	 * @param {string | UserDocument | null} user The user to find.
+	 * @returns {Promise<UserDocument>} The deleted user.
 	 */
-	public async delete(user: string | UserModel | null): Promise<User> {
+	public async delete(user: string | UserDocument | null): Promise<UserDocument> {
 		// if the user is a string, we need to find it
 		if (this.isUserIdentifier(user)) {
 			user = await this.model.findById(user);
@@ -82,7 +79,7 @@ export class UserService {
 
 		// if the user is null, fail fast
 		if (!this.isUser(user)) {
-			throw UserNotFoundError.make();
+			throw UserNotFoundErrorFactory.make();
 		}
 
 		return user.deleteOne();
@@ -91,32 +88,38 @@ export class UserService {
 	/**
 	 * @description This method will find a user by their id and return it.
 	 * @param {string} id The id of the user to find.
-	 * @returns {Promise<User | null>} The found user.
+	 * @returns {Promise<UserDocument>} The found user.
 	 */
-	public async find(id: string): Promise<User | null> {
-		return this.model.findById(id);
+	public async find(id: string): Promise<UserDocument> {
+		const document = await this.model.findById(id);
+
+		if (document) {
+			return document;
+		}
+
+		throw UserNotFoundErrorFactory.make();
 	}
 
 	/**
 	 * @description This method will find a user by their email and return it.
 	 * @param {string} email The email of the user to find.
-	 * @returns {Promise<User>} The found user.
+	 * @returns {Promise<UserDocument>} The found user.
 	 */
-	public async findByEmail(email: string): Promise<User> {
+	public async findByEmail(email: string): Promise<UserDocument> {
 		const user = await this.model.findOne({ email });
 
 		if (user) {
 			return user;
 		}
 
-		throw UserNotFoundError.make();
+		throw UserNotFoundErrorFactory.make();
 	}
 
 	/**
 	 * @description This method will find all users and return them.
-	 * @returns {Promise<User[]>} The found users.
+	 * @returns {Promise<UserDocument[]>} The found users.
 	 */
-	public async findAll(): Promise<User[]> {
+	public async findAll(): Promise<UserDocument[]> {
 		return this.model.find();
 	}
 
@@ -124,38 +127,38 @@ export class UserService {
 	 * @description This method will find a user by their email and password and return it.
 	 * @param {string} email The email of the user to find.
 	 * @param {string} password The password of the user to find.
-	 * @returns {Promise<User>} The found user.
+	 * @returns {Promise<UserDocument>} The found user.
 	 */
 	public async findByEmailAndPassword(
 		email: string,
 		password: string,
-	): Promise<User> {
+	): Promise<UserDocument> {
 		const user = await this.findByEmail(email);
 
 		if (await this.hash_service.compare(password, user.password)) {
 			return user;
 		}
 
-		throw UserNotFoundError.make();
+		throw UserNotFoundErrorFactory.make();
 	}
 
 	/**
 	 * @description This method will check if the user is a user model.
-	 * @param {string | UserModel | null} user The user to check.
-	 * @returns {user is UserModel} Whether the user is a user model.
+	 * @param {string | UserDocument | null} user The user to check.
+	 * @returns {user is UserDocument} Whether the user is a user model.
 	 * @private
 	 */
-	private isUser(user: string | UserModel | UserDocument | null): user is UserDocument {
+	private isUser(user: string | UserDocument | null): user is UserDocument {
 		return user instanceof this.model;
 	}
 
 	/**
 	 * @description This method will check if the user is a user identifier.
-	 * @param {string | UserModel | UserDocument | null} user The user to check.
+	 * @param {string | UserDocument | null} user The user to check.
 	 * @returns {user is string} Whether the user is a user identifier.
 	 * @private
 	 */
-	private isUserIdentifier(user: string | UserModel | UserDocument | null): user is string {
+	private isUserIdentifier(user: string | UserDocument | null): user is string {
 		return typeof user === "string";
 	}
 
