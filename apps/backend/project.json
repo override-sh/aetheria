@@ -60,12 +60,15 @@
 			],
 			"options": {
 				"jestConfig": "apps/backend/jest.config.ts",
-				"passWithNoTests": true
+				"passWithNoTests": false
 			},
 			"configurations": {
 				"ci": {
 					"ci": true,
-					"codeCoverage": true
+					"codeCoverage": true,
+					"coverageReporters": [
+						"text"
+					]
 				}
 			}
 		}

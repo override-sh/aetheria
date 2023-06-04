@@ -50,9 +50,6 @@
 			],
 			"@override/utility/server": [
 				"libs/utility/src/server.ts"
-			],
-			"jquery": [
-				"libs/grapesjs/src/utils/cash-dom.ts"
 			]
 		},
 		"plugins": [
