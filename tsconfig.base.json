@@ -18,9 +18,6 @@
 		"skipDefaultLibCheck": true,
 		"baseUrl": ".",
 		"paths": {
-			"@grapesjs/*": [
-				"libs/grapesjs/src/*"
-			],
 			"@override/backend-config": [
 				"libs/backend-config/src/index.ts"
 			],
