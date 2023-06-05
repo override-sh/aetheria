@@ -2,23 +2,18 @@ import { Strategy } from "passport-local";
 import { PassportStrategy } from "@nestjs/passport";
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { AuthService } from "../auth.service";
-import { HookableService } from "@override/open-press-support";
-import { HookConfiguration, IHookable } from "@override/open-press-interfaces";
-import { AUTH_MODULE_HOOKS } from "../constants";
-import { AuthModuleHooksCallback } from "../types";
+import { PASSPORT_LOCAL_STRATEGY_EVENTS } from "../constants";
+import { PassportLocalStrategyEvents } from "../types";
 import { UserDocument } from "@override/open-press-models";
-
-type hooks = AuthModuleHooksCallback
-type hooks_keys = keyof hooks
+import { NonUniformEventList } from "strongly-typed-events";
 
 @Injectable()
 export class LocalStrategy
-	extends PassportStrategy(Strategy)
-	implements IHookable<hooks, hooks_keys> {
+	extends PassportStrategy(Strategy) {
+	private _events = new NonUniformEventList<LocalStrategy, PassportLocalStrategyEvents>();
 
 	constructor(
-		private readonly auth_service: AuthService,
-		private readonly hookable_service: HookableService<hooks>,
+		private readonly _auth_service: AuthService,
 	) {
 		super({
 			usernameField: "email",
@@ -26,40 +21,35 @@ export class LocalStrategy
 		});
 	}
 
-	/* istanbul ignore next */
-	public listen(configuration: HookConfiguration<hooks_keys, hooks[hooks_keys]>): IHookable<hooks> {
-		return this.hookable_service.listen(configuration);
+
+	/**
+	 * This event is emitted before the validation process is started.
+	 * @returns {IEvent<LocalStrategy, PassportLocalStrategyEvents["hook.auth.login.before"]>}
+	 */
+	get onBeforeValidation() {
+		/* istanbul ignore next */
+		return this._events.get(PASSPORT_LOCAL_STRATEGY_EVENTS.before_validation)
+		           .asEvent();
 	}
 
-	/* istanbul ignore next */
-	public listeners(hook: hooks_keys): hooks[hooks_keys][] {
-		return this.hookable_service.listeners(hook);
+	/**
+	 * This event is emitted when the validation process is successful.
+	 * @returns {IEvent<LocalStrategy, PassportLocalStrategyEvents["hook.auth.login.success"]>}
+	 */
+	get onValidationSuccess() {
+		/* istanbul ignore next */
+		return this._events.get(PASSPORT_LOCAL_STRATEGY_EVENTS.validation_success)
+		           .asEvent();
 	}
 
-	/* istanbul ignore next */
-	public off(
-		{
-			hook,
-			callback,
-		}: HookConfiguration<hooks_keys, hooks[hooks_keys]>,
-	): IHookable<hooks> {
-		return this.hookable_service.off({
-			hook,
-			callback,
-		});
-	}
-
-	/* istanbul ignore next */
-	public once(
-		{
-			hook,
-			callback,
-		}: HookConfiguration<hooks_keys, hooks[hooks_keys]>,
-	): IHookable<hooks> {
-		return this.hookable_service.once({
-			hook,
-			callback,
-		});
+	/**
+	 * This event is emitted when the validation process is failed.
+	 * @returns {IEvent<LocalStrategy, PassportLocalStrategyEvents["hook.auth.login.failed"]>}
+	 */
+	get onValidationFailed() {
+		/* istanbul ignore next */
+		return this._events.get(PASSPORT_LOCAL_STRATEGY_EVENTS.validation_failed)
+		           .asEvent();
 	}
 
 	/**
@@ -73,28 +63,36 @@ export class LocalStrategy
 		email: string,
 		password: string,
 	): Promise<UserDocument> {
-		this.hookable_service.trigger(AUTH_MODULE_HOOKS.login_before, {
-			this:   this,
-			caller: this,
-			email,
-			password,
-		});
+		this._events.get(PASSPORT_LOCAL_STRATEGY_EVENTS.before_validation)
+		    .dispatch(
+			    this,
+			    {
+				    email,
+				    password,
+			    },
+		    );
 
-		const user = await this.auth_service.validate(email, password);
+		const user = await this._auth_service.validate(email, password);
 		if (!user) {
-			this.hookable_service.trigger(AUTH_MODULE_HOOKS.login_success, {
-				caller: this,
-				email,
-				password,
-			});
+			this._events.get(PASSPORT_LOCAL_STRATEGY_EVENTS.validation_failed)
+			    .dispatch(
+				    this,
+				    {
+					    email,
+					    password,
+				    },
+			    );
 
 			throw new UnauthorizedException();
 		}
 
-		this.hookable_service.trigger(AUTH_MODULE_HOOKS.login_success, {
-			caller: this,
-			user,
-		});
+		this._events.get(PASSPORT_LOCAL_STRATEGY_EVENTS.validation_success)
+		    .dispatch(
+			    this,
+			    {
+				    user,
+			    },
+		    );
 
 		return user;
 	}
