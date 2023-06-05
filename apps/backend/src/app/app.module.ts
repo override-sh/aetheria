@@ -13,9 +13,10 @@ import { MongooseModuleFactoryOptions } from "@nestjs/mongoose/dist/interfaces/m
 import { APP_GUARD, APP_INTERCEPTOR } from "@nestjs/core";
 import { AuthModule } from "./auth/auth.module";
 import { JwtAuthGuard } from "./auth/guards";
+import { TemplateModule } from "./template/template.module";
 
 @Module({
-	imports:     [
+	imports:   [
 		ConfigModule.forRoot({
 			isGlobal:        true,
 			cache:           true,
@@ -42,9 +43,9 @@ import { JwtAuthGuard } from "./auth/guards";
 			connectionName: DATABASE_CONNECTIONS.default,
 		}),
 		AuthModule,
+		TemplateModule,
 	],
-	controllers: [],
-	providers:   [
+	providers: [
 		{
 			provide:  APP_INTERCEPTOR,
 			useClass: ClassSerializerInterceptor,
