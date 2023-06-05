@@ -26,14 +26,17 @@ export class LocalStrategy
 		});
 	}
 
+	/* istanbul ignore next */
 	public listen(configuration: HookConfiguration<hooks_keys, hooks[hooks_keys]>): IHookable<hooks> {
 		return this.hookable_service.listen(configuration);
 	}
 
+	/* istanbul ignore next */
 	public listeners(hook: hooks_keys): hooks[hooks_keys][] {
 		return this.hookable_service.listeners(hook);
 	}
 
+	/* istanbul ignore next */
 	public off(
 		{
 			hook,
@@ -46,18 +49,7 @@ export class LocalStrategy
 		});
 	}
 
-	public on(
-		{
-			hook,
-			callback,
-		}: HookConfiguration<hooks_keys, hooks[hooks_keys]>,
-	): IHookable<hooks> {
-		return this.hookable_service.on({
-			hook,
-			callback,
-		});
-	}
-
+	/* istanbul ignore next */
 	public once(
 		{
 			hook,

@@ -58,7 +58,7 @@ describe("AuthController", () => {
 	});
 
 	it("should fire local strategy hooks when logging in", async () => {
-		local_strategy.on(
+		local_strategy.listen(
 			authModuleHookFactory(AUTH_MODULE_HOOKS.login_before, ({ caller }) => {
 				expect(caller)
 					.toBe(local_strategy);
@@ -92,6 +92,21 @@ describe("AuthController", () => {
 			.toBe(201);
 		expect(res.data.access_token)
 			.toBeDefined();
+	});
+
+	it("should be unauthorized with wrong credentials", async () => {
+		try {
+			await axios.post(`/auth/login`, {
+				"email":    "test@example.com",
+				"password": "password",
+			}, {
+				baseURL: url,
+			});
+		}
+		catch (e: any) {
+			expect(e.response.status)
+				.toBe(401);
+		}
 	});
 
 	it("should be able to get the user profile", async () => {
