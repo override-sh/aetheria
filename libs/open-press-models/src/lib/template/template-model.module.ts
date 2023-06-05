@@ -17,7 +17,7 @@ import { TemplateService } from "./template.service";
 		),
 	],
 	providers: [TemplateService],
-	exports:   [],
+	exports:   [TemplateService],
 })
 export class TemplateModelModule {
 }
