@@ -20,7 +20,7 @@ describe("hookable", () => {
 				hook: string,
 				value: any,
 			) {
-				super.fire(hook, value);
+				super.trigger(hook, value);
 			}
 		}();
 	});
@@ -28,7 +28,7 @@ describe("hookable", () => {
 	it("should call the hook when registered with make method", () => {
 		const hook = jest.fn();
 
-		cls.on(makeHook("myHook", hook));
+		cls.listen(makeHook("myHook", hook));
 		cls.fake_fire("myHook", "value");
 
 		expect(hook)

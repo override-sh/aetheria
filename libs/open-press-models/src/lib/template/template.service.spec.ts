@@ -326,11 +326,12 @@ describe("TemplateService", () => {
 
 		const docs = await service.findAll();
 
-		expect(docs[0].name)
-			.toEqual(template_basic_properties.name);
-		expect(docs[1].name)
-			.toEqual("test2");
-		expect(docs[2].name)
-			.toEqual("test3");
+		expect(docs.map(value => value.name)
+		           .sort())
+			.toEqual([
+				doc.name,
+				doc_1.name,
+				doc_2.name,
+			]);
 	});
 });

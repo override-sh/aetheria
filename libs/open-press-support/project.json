@@ -22,7 +22,7 @@
 			],
 			"options": {
 				"jestConfig": "libs/open-press-support/jest.config.ts",
-				"passWithNoTests": true
+				"passWithNoTests": false
 			},
 			"configurations": {
 				"ci": {
