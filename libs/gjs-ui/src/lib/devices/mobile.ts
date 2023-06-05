@@ -1,4 +1,4 @@
-import { DeviceProperties } from "@grapesjs/device_manager/model/Device";
+import { DeviceProperties } from "grapesjs";
 
 export const DeviceMobile: DeviceProperties = {
 	name:       "Mobile",

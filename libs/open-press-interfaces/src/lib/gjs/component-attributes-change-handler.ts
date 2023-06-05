@@ -1,4 +1,4 @@
-import Component from "@grapesjs/dom_components/model/Component";
+import { Component } from "grapesjs";
 
 export interface ComponentAttributeChangeHandlerOptions {
 	init?: boolean;

@@ -1,4 +1,4 @@
-import { Editor } from "@grapesjs/index";
+import { Editor } from "grapesjs";
 import {
 	ButtonComponent,
 	ColumnsComponent,

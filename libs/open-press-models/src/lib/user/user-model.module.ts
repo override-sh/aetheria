@@ -19,7 +19,7 @@ import { HashModule } from "@override/open-press-support";
 		HashModule,
 	],
 	providers: [UserService],
-	exports:   [],
+	exports:   [UserService],
 })
 export class UserModelModule {
 }

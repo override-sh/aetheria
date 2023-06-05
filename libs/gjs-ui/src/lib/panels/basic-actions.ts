@@ -1,7 +1,8 @@
-import Panel from "@grapesjs/panels/model/Panel";
+import { Panel } from "grapesjs";
 import {
 	ExportCodeButton,
-	FullscreenButton, ImportCodeButton,
+	FullscreenButton,
+	ImportCodeButton,
 	PreviewButton,
 	RedoButton,
 	UndoButton,

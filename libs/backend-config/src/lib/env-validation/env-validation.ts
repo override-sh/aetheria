@@ -127,14 +127,14 @@ export class EnvValidation
 	 * @returns {Record<string, unknown>}
 	 */
 	public validateEnv(config: Record<string, any>): Record<string, unknown> {
-		this.fire(ENV_VALIDATION_HOOK.validate_before, { config });
+		this.trigger(ENV_VALIDATION_HOOK.validate_before, { config });
 
 		this.resolveConfigValidationSchema()
 		    .forEach(schema => {
 			    // validate the config object against the validation schema
 			    const { error } = schema.validate(config, { allowUnknown: true });
 
-			    this.fire(
+			    this.trigger(
 				    ENV_VALIDATION_HOOK.validate_schema,
 				    {
 					    schema,
@@ -149,7 +149,7 @@ export class EnvValidation
 			    }
 		    });
 
-		this.fire(ENV_VALIDATION_HOOK.validate_after, { config });
+		this.trigger(ENV_VALIDATION_HOOK.validate_after, { config });
 
 		// return the validated config object if no error was found
 		return config;
@@ -174,14 +174,14 @@ export class EnvValidation
 			           const config_files = readdirSync(cwd)
 				           .filter(value => this.passesConfigFileFilters(value));
 
-			           this.fire(ENV_VALIDATION_HOOK.configuration_resolved_files, { files: config_files });
+			           this.trigger(ENV_VALIDATION_HOOK.configuration_resolved_files, { files: config_files });
 
 			           return tap(
 				           config_files.map(file => require(resolve(cwd, file)))
 				                       .map(config => config.validationSchema || null)
 				                       .filter(schema => schema !== null) as Joi.ObjectSchema[],
 				           schemas => {
-					           this.fire(ENV_VALIDATION_HOOK.configuration_loaded_schemas, { schemas });
+					           this.trigger(ENV_VALIDATION_HOOK.configuration_loaded_schemas, { schemas });
 				           },
 			           );
 		           })

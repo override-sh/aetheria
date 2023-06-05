@@ -19,22 +19,9 @@ describe("hookable", () => {
 				hook: string,
 				value: any,
 			) {
-				super.fire(hook, value);
+				super.trigger(hook, value);
 			}
 		}();
-	});
-
-	it("should call the hook when registered with on", () => {
-		const hook = jest.fn();
-
-		cls.on({
-			hook:     "myHook",
-			callback: hook,
-		});
-		cls.fake_fire("myHook", "value");
-
-		expect(hook)
-			.toHaveBeenCalledWith("value");
 	});
 
 	it("should call the hook when registered with listen", () => {
@@ -82,7 +69,7 @@ describe("hookable", () => {
 	it("should disable the registered hook", () => {
 		const hook = jest.fn();
 
-		cls.on({
+		cls.listen({
 			hook:     "myHook",
 			callback: hook,
 		});

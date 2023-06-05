@@ -1,6 +1,5 @@
-import { Editor } from "@grapesjs/index";
+import { Component, Editor } from "grapesjs";
 import { explodeClasses, GrapesJsUtility } from "@override/utility";
-import Component from "@grapesjs/dom_components/model/Component";
 import { ComponentAttributeChangeHandlerOptions } from "@override/open-press-interfaces";
 
 export const HeaderComponent = (editor: Editor) => {

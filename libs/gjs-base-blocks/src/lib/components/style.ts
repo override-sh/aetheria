@@ -1,8 +1,7 @@
-import { Editor } from "@grapesjs/index";
+import { Component, Editor } from "grapesjs";
 import { TRAIT_SECTION_HEADER } from "@override/gjs-ui";
 import { OPEN_STYLESHEET_EDITOR_MODAL, OpenStylesheetEditorModalOptions } from "../commands";
 import { GrapesJsUtility } from "@override/utility";
-import Component from "@grapesjs/dom_components/model/Component";
 import { ComponentAttributeChangeHandlerOptions } from "@override/open-press-interfaces";
 
 

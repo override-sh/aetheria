@@ -1,7 +1,4 @@
 import { ClassSerializerInterceptor, Module } from "@nestjs/common";
-
-import { AppController } from "./app.controller";
-import { AppService } from "./app.service";
 import { ConfigModule } from "@nestjs/config";
 import {
 	authConfig,
@@ -13,7 +10,9 @@ import {
 } from "@override/backend-config";
 import { MongooseModule } from "@nestjs/mongoose";
 import { MongooseModuleFactoryOptions } from "@nestjs/mongoose/dist/interfaces/mongoose-options.interface";
-import { APP_INTERCEPTOR } from "@nestjs/core";
+import { APP_GUARD, APP_INTERCEPTOR } from "@nestjs/core";
+import { AuthModule } from "./auth/auth.module";
+import { JwtAuthGuard } from "./auth/guards";
 
 @Module({
 	imports:     [
@@ -32,7 +31,8 @@ import { APP_INTERCEPTOR } from "@nestjs/core";
 			useFactory:     async (db_config: DatabaseConfig): Promise<MongooseModuleFactoryOptions> => {
 				return {
 					dbName: db_config[DATABASE_CONNECTIONS.default].database,
-					uri:    `mongodb://` +
+					uri:
+					        `mongodb://` +
 					        `${db_config[DATABASE_CONNECTIONS.default].username}:` +
 					        `${db_config[DATABASE_CONNECTIONS.default].password}@` +
 					        `${db_config[DATABASE_CONNECTIONS.default].host}:` +
@@ -41,13 +41,17 @@ import { APP_INTERCEPTOR } from "@nestjs/core";
 			},
 			connectionName: DATABASE_CONNECTIONS.default,
 		}),
+		AuthModule,
 	],
-	controllers: [AppController],
+	controllers: [],
 	providers:   [
-		AppService,
 		{
 			provide:  APP_INTERCEPTOR,
 			useClass: ClassSerializerInterceptor,
+		},
+		{
+			provide:  APP_GUARD,
+			useClass: JwtAuthGuard,
 		},
 	],
 })

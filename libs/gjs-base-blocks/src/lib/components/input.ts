@@ -1,5 +1,4 @@
-import { Editor } from "@grapesjs/index";
-import Component from "@grapesjs/dom_components/model/Component";
+import { Component, Editor } from "grapesjs";
 import { GrapesJsUtility } from "@override/utility";
 import {
 	ComponentAttributeChangeHandlerOptions,

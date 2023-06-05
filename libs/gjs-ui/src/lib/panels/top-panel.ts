@@ -1,4 +1,4 @@
-import Panel from "@grapesjs/panels/model/Panel";
+import { Panel } from "grapesjs";
 
 export const TopPanel: Panel = {
 	id: "panel-top",

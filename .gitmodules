@@ -1,4 +1,0 @@
-[submodule "libs/grapesjs"]
-	path = libs/grapesjs
-	url = https://github.com/GrapesJS/grapesjs.git
-	branch = master

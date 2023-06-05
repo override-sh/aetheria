@@ -1,5 +1,4 @@
-import { CommandObject } from "@grapesjs/commands/view/CommandAbstract";
-import { Editor } from "@grapesjs/index";
+import { CommandObject, Editor } from "grapesjs";
 import { NullableHTMLElement } from "@override/open-press-interfaces";
 
 type ShowCommandType = CommandObject & {

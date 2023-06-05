@@ -1,10 +1,9 @@
-import { CommandObject } from "@grapesjs/commands/view/CommandAbstract";
+import { CommandObject, Editor } from "grapesjs";
 import { EditorView } from "@codemirror/view";
 import { EditorState } from "@codemirror/state";
 import { darcula } from "@uiw/codemirror-theme-darcula";
 import { html } from "@codemirror/lang-html";
 import { basicSetup } from "codemirror";
-import { Editor } from "@grapesjs/index";
 
 const SCRIPT_TEMPLATE = `<!-- 
 Write the code you want to import here.

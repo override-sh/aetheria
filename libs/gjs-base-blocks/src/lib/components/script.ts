@@ -1,34 +1,6 @@
-import { Editor } from "@grapesjs/index";
+import { Editor } from "grapesjs";
 import { TRAIT_SECTION_HEADER } from "@override/gjs-ui";
-
-import {
-	crosshairCursor,
-	drawSelection,
-	dropCursor,
-	EditorView,
-	highlightActiveLine,
-	highlightActiveLineGutter,
-	highlightSpecialChars,
-	keymap,
-	lineNumbers,
-	rectangularSelection,
-} from "@codemirror/view";
-import { defaultKeymap, history, historyKeymap } from "@codemirror/commands";
-import { javascript } from "@codemirror/lang-javascript";
-import { autocompletion, closeBrackets, closeBracketsKeymap, completionKeymap } from "@codemirror/autocomplete";
-import { EditorState } from "@codemirror/state";
-import {
-	bracketMatching,
-	defaultHighlightStyle,
-	foldGutter,
-	foldKeymap,
-	indentOnInput,
-	syntaxHighlighting,
-} from "@codemirror/language";
-import { lintKeymap } from "@codemirror/lint";
-import { highlightSelectionMatches, searchKeymap } from "@codemirror/search";
-import { darcula } from "@uiw/codemirror-theme-darcula";
-import { openScriptEditorModal, OpenScriptEditorModalOptions } from "../commands";
+import { OpenScriptEditorModalOptions } from "../commands";
 import { OPEN_SCRIPT_EDITOR_MODAL } from "../commands/names";
 
 

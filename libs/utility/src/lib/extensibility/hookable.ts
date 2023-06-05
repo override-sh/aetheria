@@ -1,4 +1,4 @@
-import { HookConfiguration } from "@override/open-press-interfaces";
+import { HookConfiguration, IHookable } from "@override/open-press-interfaces";
 
 /**
  * @description This class is used to add hooks to a class.
@@ -25,7 +25,8 @@ export abstract class Hookable<
 		[key: string | number | symbol]: (data: any) => void
 	},
 	HookName extends keyof FunctionTypeObject = keyof FunctionTypeObject,
-> {
+>
+	implements IHookable<FunctionTypeObject, HookName> {
 	protected hooks = {} as { [key in HookName]: (FunctionTypeObject[HookName])[] };
 
 	/**
@@ -35,7 +36,7 @@ export abstract class Hookable<
 	 * @returns {Hookable} The hookable object.
 	 * @public
 	 */
-	public on(
+	public listen(
 		{
 			hook,
 			callback,
@@ -49,17 +50,6 @@ export abstract class Hookable<
 		this.hooks[hook].push(callback);
 
 		return this;
-	}
-
-	/**
-	 * @description This function will add a hook to the hookable object.
-	 * @param configuration The configuration for the hook.
-	 * @returns {Hookable} The hookable object.
-	 */
-	public listen(
-		configuration: HookConfiguration<HookName, FunctionTypeObject[HookName]>,
-	): Hookable<FunctionTypeObject, HookName> {
-		return this.on(configuration);
 	}
 
 	/**
@@ -95,7 +85,7 @@ export abstract class Hookable<
 			});
 		};
 
-		return this.on({
+		return this.listen({
 			hook,
 			callback: onceCallback as FunctionTypeObject[HookName],
 		});
@@ -135,32 +125,5 @@ export abstract class Hookable<
 		}
 
 		return this;
-	}
-
-	/**
-	 * @description This function will trigger a named hook with the given arguments.
-	 * @param {string} hook The hook to trigger.
-	 * @param args The arguments to pass to the hook.
-	 * @returns {Hookable} The hookable object.
-	 */
-	protected emit(
-		hook: HookName,
-		args: object,
-	): Hookable<FunctionTypeObject, HookName> {
-		/* istanbul ignore next */
-		return this.trigger(hook, args);
-	}
-
-	/**
-	 * @description This function will trigger a named hook with the given arguments.
-	 * @param {string} hook The hook to trigger.
-	 * @param args The arguments to pass to the hook.
-	 * @returns {Hookable} The hookable object.
-	 */
-	protected fire(
-		hook: HookName,
-		args: object,
-	): Hookable<FunctionTypeObject, HookName> {
-		return this.trigger(hook, args);
 	}
 }

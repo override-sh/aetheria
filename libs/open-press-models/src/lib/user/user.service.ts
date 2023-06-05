@@ -18,6 +18,7 @@ export class UserService {
 	 * @description This method will create a new user in the database.
 	 * @param {CreateUserDTO} user The user to create.
 	 * @returns {Promise<UserDocument>} The created user.
+	 * @throws {VerificationEmailSentError} If the email already exists.
 	 */
 	public async create(user: CreateUserDTO): Promise<UserDocument> {
 		if (await this.emailExists(user.email)) {
@@ -37,6 +38,8 @@ export class UserService {
 	 * @param {string | UserDocument | null} user The user to find.
 	 * @param {UpdateUserDTO} update The update to apply.
 	 * @returns {Promise<UserDocument>} The updated user.
+	 * @throws {VerificationEmailSentError} If the email already exists.
+	 * @throws {UserNotFoundError} If the user is not found.
 	 */
 	public async update(
 		user: string | UserDocument,
@@ -68,6 +71,7 @@ export class UserService {
 	 * @description This method will find a user by their id or object and delete it.
 	 * @param {string | UserDocument | null} user The user to find.
 	 * @returns {Promise<UserDocument>} The deleted user.
+	 * @throws {UserNotFoundError} If the user is not found.
 	 */
 	public async delete(user: string | UserDocument): Promise<UserDocument> {
 		// if the user is a string, we need to find it
@@ -83,6 +87,7 @@ export class UserService {
 	 * @description This method will find a user by their id and return it.
 	 * @param {string} id The id of the user to find.
 	 * @returns {Promise<UserDocument>} The found user.
+	 * @throws {UserNotFoundError} If the user is not found.
 	 */
 	public async find(id: string): Promise<UserDocument> {
 		const document = await this.model.findById(id);
@@ -98,6 +103,7 @@ export class UserService {
 	 * @description This method will find a user by their email and return it.
 	 * @param {string} email The email of the user to find.
 	 * @returns {Promise<UserDocument>} The found user.
+	 * @throws {UserNotFoundError} If the user is not found.
 	 */
 	public async findByEmail(email: string): Promise<UserDocument> {
 		const user = await this.model.findOne({ email });
@@ -122,6 +128,7 @@ export class UserService {
 	 * @param {string} email The email of the user to find.
 	 * @param {string} password The password of the user to find.
 	 * @returns {Promise<UserDocument>} The found user.
+	 * @throws {UserNotFoundError} If the user is not found.
 	 */
 	public async findByEmailAndPassword(
 		email: string,
