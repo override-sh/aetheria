@@ -1,14 +1,60 @@
 import { Exclude } from "class-transformer";
 import { DateTime } from "luxon";
 import { MongoseId } from "@override/open-press-interfaces";
+import { IsAscii, IsOptional, IsString, MinLength } from "class-validator";
 
-export interface CreateTemplateDTO {
-	name: string;
-	html: string;
-	css: string;
+export class CreateTemplateDTO {
+	/**
+	 * @description The name of the template.
+	 * @type {string}
+	 */
+	@IsString()
+	@IsAscii()
+	@MinLength(3)
+	name!: string;
+
+	/**
+	 * @description The HTML of the template.
+	 * @type {string}
+	 */
+	@IsString()
+	html!: string;
+
+	/**
+	 * @description The CSS of the template.
+	 * @type {string}
+	 */
+	@IsString()
+	css!: string;
 }
 
-export type UpdateTemplateDTO = Partial<CreateTemplateDTO>;
+export class UpdateTemplateDTO {
+	/**
+	 * @description The name of the template.
+	 * @type {string}
+	 */
+	@IsString()
+	@IsAscii()
+	@MinLength(3)
+	@IsOptional()
+	name?: string;
+
+	/**
+	 * @description The HTML of the template.
+	 * @type {string}
+	 */
+	@IsString()
+	@IsOptional()
+	html?: string;
+
+	/**
+	 * @description The CSS of the template.
+	 * @type {string}
+	 */
+	@IsString()
+	@IsOptional()
+	css?: string;
+}
 
 export class TemplateEntity {
 	id!: string;

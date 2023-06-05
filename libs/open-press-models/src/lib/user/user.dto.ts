@@ -1,14 +1,75 @@
 import { Exclude } from "class-transformer";
 import { DateTime } from "luxon";
 import { MongoseId } from "@override/open-press-interfaces";
+import { IsAscii, IsEmail, IsString, IsStrongPassword, MaxLength, MinLength } from "class-validator";
 
-export interface CreateUserDTO {
-	name: string;
-	email: string;
-	password: string;
+export class CreateUserDTO {
+	/**
+	 * @description The name of the user.
+	 * @type {string}
+	 */
+	@IsString()
+	@IsAscii()
+	@MinLength(3)
+	@MaxLength(255)
+	name!: string;
+
+	/**
+	 * @description The email of the user.
+	 * @type {string}
+	 */
+	@IsEmail({
+		domain_specific_validation: true,
+	})
+	email!: string;
+
+	/**
+	 * @description The password of the user.
+	 * @type {string}
+	 */
+	@IsStrongPassword({
+		minLength:    12,
+		minNumbers:   1,
+		minSymbols:   1,
+		minUppercase: 1,
+		minLowercase: 1,
+	})
+	password!: string;
 }
 
-export type UpdateUserDTO = Partial<CreateUserDTO>;
+export class UpdateUserDTO {
+	/**
+	 * @description The name of the user.
+	 * @type {string}
+	 */
+	@IsString()
+	@IsAscii()
+	@MinLength(3)
+	@MaxLength(255)
+	name?: string;
+
+	/**
+	 * @description The email of the user.
+	 * @type {string}
+	 */
+	@IsEmail({
+		domain_specific_validation: true,
+	})
+	email?: string;
+
+	/**
+	 * @description The password of the user.
+	 * @type {string}
+	 */
+	@IsStrongPassword({
+		minLength:    12,
+		minNumbers:   1,
+		minSymbols:   1,
+		minUppercase: 1,
+		minLowercase: 1,
+	})
+	password?: string;
+}
 
 export class UserEntity {
 	id!: string;
