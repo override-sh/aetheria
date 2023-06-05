@@ -2,8 +2,6 @@ import { Test, TestingModule } from "@nestjs/testing";
 import { AuthController } from "./auth.controller";
 import { LocalStrategy } from "./strategies";
 import { INestApplication } from "@nestjs/common";
-import { authModuleHookFactory } from "./hook-factory";
-import { AUTH_MODULE_HOOKS } from "./constants";
 import axios from "axios";
 import { AppModule } from "../app.module";
 import { Connection } from "mongoose";
@@ -58,11 +56,11 @@ describe("AuthController", () => {
 	});
 
 	it("should fire local strategy hooks when logging in", async () => {
-		local_strategy.listen(
-			authModuleHookFactory(AUTH_MODULE_HOOKS.login_before, ({ caller }) => {
+		const unsubscribe = local_strategy.onBeforeValidation.subscribe(
+			(caller) => {
 				expect(caller)
 					.toBe(local_strategy);
-			}),
+			},
 		);
 
 		await makeUser("test@example.com", "password");
@@ -76,6 +74,8 @@ describe("AuthController", () => {
 
 		expect(res.status)
 			.toBe(201);
+
+		unsubscribe();
 	});
 
 	it("should return valid access token on login", async () => {
