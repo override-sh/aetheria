@@ -11,7 +11,7 @@ export class JwtAuthGuard
 		super();
 	}
 
-	public canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
+	public override canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
 		const is_public = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_ENDPOINT_KEY, [
 			context.getHandler(),
 			context.getClass(),
