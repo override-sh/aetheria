@@ -73,7 +73,7 @@ describe("env-validation", () => {
 				             },
 			             ),
 		             )
-		             .on(
+		             .listen(
 			             makeEnvHook(
 				             ENV_VALIDATION_HOOK.validate_after,
 				             ({ config }) => {

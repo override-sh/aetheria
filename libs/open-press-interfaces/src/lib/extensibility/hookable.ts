@@ -8,20 +8,6 @@ export interface IHookable<
 > {
 	/**
 	 * @description This function will add a hook to the hookable object.
-	 * @param {string} hook The hook to add.
-	 * @param {Function} callback The callback to add.
-	 * @returns {Hookable} The hookable object.
-	 * @public
-	 */
-	on(
-		{
-			hook,
-			callback,
-		}: HookConfiguration<HookName, FunctionTypeObject[HookName]>,
-	): IHookable<FunctionTypeObject, HookName>;
-
-	/**
-	 * @description This function will add a hook to the hookable object.
 	 * @param configuration The configuration for the hook.
 	 * @returns {Hookable} The hookable object.
 	 */

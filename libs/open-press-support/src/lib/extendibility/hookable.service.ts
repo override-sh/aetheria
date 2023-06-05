@@ -21,30 +21,4 @@ export class HookableService<
 	): Hookable<FunctionTypeObject, HookName> {
 		return super.trigger(hook, args);
 	}
-
-	/**
-	 * @description This function will trigger a named hook with the given arguments.
-	 * @param {string} hook The hook to trigger.
-	 * @param args The arguments to pass to the hook.
-	 * @returns {Hookable} The hookable object.
-	 */
-	public override emit(
-		hook: HookName,
-		args: object,
-	): Hookable<FunctionTypeObject, HookName> {
-		return super.emit(hook, args);
-	}
-
-	/**
-	 * @description This function will trigger a named hook with the given arguments.
-	 * @param {string} hook The hook to trigger.
-	 * @param args The arguments to pass to the hook.
-	 * @returns {Hookable} The hookable object.
-	 */
-	public override fire(
-		hook: HookName,
-		args: object,
-	): Hookable<FunctionTypeObject, HookName> {
-		return super.fire(hook, args);
-	}
 }
