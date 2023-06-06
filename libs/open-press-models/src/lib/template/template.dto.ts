@@ -1,60 +1,29 @@
 import { Exclude } from "class-transformer";
 import { DateTime } from "luxon";
 import { MongoseId } from "@override/open-press-interfaces";
-import { IsAscii, IsOptional, IsString, MinLength } from "class-validator";
+import { z } from "zod";
 
-export class CreateTemplateDTO {
+export const CreateTemplateDTOValidationSchema = z.object({
 	/**
 	 * @description The name of the template.
-	 * @type {string}
 	 */
-	@IsString()
-	@IsAscii()
-	@MinLength(3)
-	name!: string;
+	name: z.string()
+	       .min(3),
 
 	/**
 	 * @description The HTML of the template.
-	 * @type {string}
 	 */
-	@IsString()
-	html!: string;
+	html: z.string(),
 
 	/**
 	 * @description The CSS of the template.
-	 * @type {string}
 	 */
-	@IsString()
-	css!: string;
-}
+	css: z.string(),
+});
+export type CreateTemplateDTO = z.infer<typeof CreateTemplateDTOValidationSchema>;
 
-export class UpdateTemplateDTO {
-	/**
-	 * @description The name of the template.
-	 * @type {string}
-	 */
-	@IsString()
-	@IsAscii()
-	@MinLength(3)
-	@IsOptional()
-	name?: string;
-
-	/**
-	 * @description The HTML of the template.
-	 * @type {string}
-	 */
-	@IsString()
-	@IsOptional()
-	html?: string;
-
-	/**
-	 * @description The CSS of the template.
-	 * @type {string}
-	 */
-	@IsString()
-	@IsOptional()
-	css?: string;
-}
+export const UpdateTemplateDTOValidationSchema = CreateTemplateDTOValidationSchema.partial();
+export type UpdateTemplateDTO = z.infer<typeof UpdateTemplateDTOValidationSchema>;
 
 export class TemplateEntity {
 	id!: string;
