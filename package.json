@@ -45,18 +45,17 @@
 		"zod": "^3.21.4"
 	},
 	"devDependencies": {
-		"@types/jsonwebtoken": "^9.0.2",
 		"@babel/preset-react": "^7.14.5",
 		"@faker-js/faker": "^8.0.2",
 		"@nestjs/schematics": "^9.1.0",
 		"@nestjs/testing": "^9.1.1",
-		"@nx/nest": "^16.3.2",
-		"@nx/next": "16.2.1",
 		"@nx/cypress": "16.2.1",
 		"@nx/eslint-plugin": "16.2.1",
 		"@nx/jest": "16.2.2",
 		"@nx/js": "16.3.2",
 		"@nx/linter": "16.3.2",
+		"@nx/nest": "^16.3.2",
+		"@nx/next": "16.2.1",
 		"@nx/node": "16.2.2",
 		"@nx/react": "16.2.1",
 		"@nx/webpack": "16.3.2",
@@ -74,6 +73,7 @@
 		"@types/ckeditor": "^4.9.10",
 		"@types/express": "^4.17.17",
 		"@types/jest": "^29.4.0",
+		"@types/jsonwebtoken": "^9.0.2",
 		"@types/lodash": "^4.14.195",
 		"@types/luxon": "^3.3.0",
 		"@types/node": "18.14.2",
@@ -109,6 +109,7 @@
 		"ts-loader": "^9.4.3",
 		"ts-node": "^10.9.1",
 		"typescript": "~5.0.2",
+		"verdaccio": "^5.0.4",
 		"webpack": "^5.85.0",
 		"webpack-cli": "^5.1.2"
 	}
