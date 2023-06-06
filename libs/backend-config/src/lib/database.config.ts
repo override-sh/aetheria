@@ -1,6 +1,6 @@
 import { ConfigType, registerAs } from "@nestjs/config";
-import * as Joi from "joi";
 import { IDatabaseConfig } from "@override/open-press-interfaces";
+import { z } from "zod";
 
 /* istanbul ignore file */
 
@@ -57,23 +57,11 @@ export type DatabaseConfig = ConfigType<typeof databaseConfig>;
 
 /**
  * @description This is the validation schema that will be used to validate the environment.
- * @type {Joi.ObjectSchema<any>}
  */
-export const validationSchema = Joi.object({
-	DB_HOST:     Joi.string()
-	                .min(1, "utf8")
-	                .required(),
-	DB_PORT:     Joi.number()
-	                .min(1024)
-	                .max(65535)
-	                .required(),
-	DB_USERNAME: Joi.string()
-	                .min(1, "utf8")
-	                .required(),
-	DB_PASSWORD: Joi.string()
-	                .min(1, "utf8")
-	                .required(),
-	DB_DATABASE: Joi.string()
-	                .min(1, "utf8")
-	                .required(),
+export const validationSchema = z.object({
+	DB_HOST:     z.string().min(1),
+	DB_PORT:     z.coerce.number().min(1024).max(65535).optional(),
+	DB_USERNAME: z.string().min(1),
+	DB_PASSWORD: z.string().min(1),
+	DB_DATABASE: z.string().min(1),
 });

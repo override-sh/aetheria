@@ -13,7 +13,6 @@ import {
 } from "@override/backend-config";
 import { MongooseModule } from "@nestjs/mongoose";
 import { MongooseModuleFactoryOptions } from "@nestjs/mongoose/dist/interfaces/mongoose-options.interface";
-import { ExtendibilityModule } from "@override/open-press-support";
 import { UserModelModule } from "@override/open-press-models";
 import { PassportModule } from "@nestjs/passport";
 import { JwtModule, JwtModuleOptions } from "@nestjs/jwt";
@@ -52,7 +51,6 @@ describe("AuthService", () => {
 						},
 						connectionName: DATABASE_CONNECTIONS.default,
 					}),
-					ExtendibilityModule,
 					UserModelModule,
 					PassportModule,
 					JwtModule.registerAsync({

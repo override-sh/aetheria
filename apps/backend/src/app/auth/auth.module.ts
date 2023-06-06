@@ -6,11 +6,9 @@ import { JwtStrategy, LocalStrategy } from "./strategies";
 import { AuthController } from "./auth.controller";
 import { JwtModule, JwtModuleOptions } from "@nestjs/jwt";
 import { AUTH_CONFIG_KEY, AuthConfig } from "@override/backend-config";
-import { ExtendibilityModule } from "@override/open-press-support";
 
 @Module({
 	imports: [
-		ExtendibilityModule,
 		UserModelModule,
 		PassportModule,
 		JwtModule.registerAsync({

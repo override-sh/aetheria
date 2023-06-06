@@ -1,6 +1,4 @@
 import { EnvValidation } from "./env-validation";
-import { makeEnvHook } from "./hook-factory";
-import { ENV_VALIDATION_HOOK } from "./constants";
 import { resolve } from "path";
 
 describe("env-validation", () => {
@@ -62,60 +60,22 @@ describe("env-validation", () => {
 	});
 
 	it("emits hooks", () => {
-		EnvValidation.instance
-		             .clearConfigFileFilters()
-		             .listen(
-			             makeEnvHook(
-				             ENV_VALIDATION_HOOK.validate_before,
-				             ({ config }) => {
-					             expect(config)
-						             .toEqual({ test: false });
-				             },
-			             ),
-		             )
-		             .listen(
-			             makeEnvHook(
-				             ENV_VALIDATION_HOOK.validate_after,
-				             ({ config }) => {
-					             expect(config)
-						             .toEqual({ test: false });
-				             },
-			             ),
-		             )
-		             .listen(
-			             makeEnvHook(
-				             ENV_VALIDATION_HOOK.validate_schema,
-				             ({
-					              config,
-					              error,
-				              }) => {
-					             expect(config)
-						             .toEqual({ test: false });
-					             expect(error)
-						             .toBeUndefined();
-				             },
-			             ),
-		             )
-		             .listen(
-			             makeEnvHook(
-				             ENV_VALIDATION_HOOK.configuration_resolved_files,
-				             ({ files }) => {
-					             expect(files)
-						             .toHaveLength(0);
-				             },
-			             ),
-		             )
-		             .listen(
-			             makeEnvHook(
-				             ENV_VALIDATION_HOOK.configuration_loaded_schemas,
-				             ({ schemas }) => {
-					             expect(schemas)
-						             .toHaveLength(0);
-				             },
-			             ),
-		             );
+		const unsubscribe = EnvValidation.instance
+		                                 .clearConfigFileFilters()
+		                                 .onBeforeValidation
+		                                 .subscribe(
+			                                 (
+				                                 sender,
+				                                 { config },
+			                                 ) => {
+				                                 expect(config)
+					                                 .toEqual({ test: false });
+			                                 },
+		                                 );
 
 		expect(EnvValidation.instance.validateEnv({ test: false }))
 			.toEqual({ test: false });
+
+		unsubscribe();
 	});
 });

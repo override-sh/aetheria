@@ -1,21 +1,22 @@
 import { resolve } from "path";
 import { readdirSync } from "fs";
-import * as Joi from "joi";
-import { Hookable, tap } from "@override/utility/server";
-import { EnvValidationHooksCallback } from "./types";
+import { safeValidate } from "@override/utility/server";
+import { EnvValidationEvents } from "./types";
 import { ENV_VALIDATION_HOOK } from "./constants";
+import { ZodSchema } from "zod";
+import { tap } from "lodash";
+import { NonUniformEventList } from "strongly-typed-events";
 
 /**
  * @description This class is responsible for validating the environment variables.
  */
-export class EnvValidation
-	extends Hookable<EnvValidationHooksCallback> {
+export class EnvValidation {
 	private static _instance: EnvValidation;
-	private config_file_filters: RegExp[] = [];
-	private resolution_paths: string[] = [];
+	private _events = new NonUniformEventList<EnvValidation, EnvValidationEvents>();
+	private _config_file_filters: RegExp[] = [];
+	private _resolution_paths: string[] = [];
 
 	private constructor() {
-		super();
 		this.addConfigFileFilters([
 			/\.config\.(ts|js)$/,
 		]);
@@ -38,12 +39,65 @@ export class EnvValidation
 		return EnvValidation._instance;
 	}
 
-	public get configFileFilters(): RegExp[] {
-		return this.config_file_filters;
+	/**
+	 * Triggered before the validation process begins.
+	 * @returns {IEvent<EnvValidation, EnvValidationEvents["hook.env.validate.before"]>}
+	 */
+	get onBeforeValidation() {
+		/* istanbul ignore next */
+		return this._events.get(ENV_VALIDATION_HOOK.before_validation).asEvent();
 	}
 
+	/**
+	 * Triggered after the validation process ends.
+	 * @returns {IEvent<EnvValidation, EnvValidationEvents["hook.env.validate.after"]>}
+	 */
+	get onAfterValidation() {
+		/* istanbul ignore next */
+		return this._events.get(ENV_VALIDATION_HOOK.after_validation).asEvent();
+	}
+
+	/**
+	 * Triggered when a schema is validated.
+	 * @returns {IEvent<EnvValidation, EnvValidationEvents["hook.env.validate.schema"]>}
+	 */
+	get onValidateSchema() {
+		/* istanbul ignore next */
+		return this._events.get(ENV_VALIDATION_HOOK.validate_schema).asEvent();
+	}
+
+	/**
+	 * Triggered when the configuration files are resolved.
+	 * @returns {IEvent<EnvValidation, EnvValidationEvents["hook.env.configuration.resolved-files"]>}
+	 */
+	get onConfigurationResolvedFiles() {
+		/* istanbul ignore next */
+		return this._events.get(ENV_VALIDATION_HOOK.configuration_resolved_files).asEvent();
+	}
+
+	/**
+	 * Triggered when the schemas are loaded.
+	 * @returns {IEvent<EnvValidation, EnvValidationEvents["hook.env.configuration.loaded-schemas"]>}
+	 */
+	get onConfigurationLoadedSchemas() {
+		/* istanbul ignore next */
+		return this._events.get(ENV_VALIDATION_HOOK.configuration_loaded_schemas).asEvent();
+	}
+
+	/**
+	 * Accessor to the list of file filters.
+	 * @returns {RegExp[]}
+	 */
+	public get configFileFilters(): RegExp[] {
+		return this._config_file_filters;
+	}
+
+	/**
+	 * Accessor to the list of resolution paths.
+	 * @returns {string[]}
+	 */
 	public get resolutionPaths(): string[] {
-		return this.resolution_paths;
+		return this._resolution_paths;
 	}
 
 	/**
@@ -52,7 +106,7 @@ export class EnvValidation
 	 * @returns {EnvValidation} The EnvValidation instance.
 	 */
 	public addResolutionPath(path: string): EnvValidation {
-		this.resolution_paths.push(path);
+		this._resolution_paths.push(path);
 		return this;
 	}
 
@@ -72,12 +126,12 @@ export class EnvValidation
 	 * @returns {EnvValidation} The EnvValidation instance.
 	 */
 	public removeResolutionPath(path: string): EnvValidation {
-		this.resolution_paths = this.resolution_paths.filter(p => p !== path);
+		this._resolution_paths = this._resolution_paths.filter(p => p !== path);
 		return this;
 	}
 
 	public clearResolutionPaths(): EnvValidation {
-		this.resolution_paths = [];
+		this._resolution_paths = [];
 		return this;
 	}
 
@@ -87,7 +141,7 @@ export class EnvValidation
 	 * @returns {EnvValidation} The EnvValidation instance.
 	 */
 	public addConfigFileFilter(filter: RegExp): EnvValidation {
-		this.config_file_filters.push(filter);
+		this._config_file_filters.push(filter);
 		return this;
 	}
 
@@ -107,7 +161,7 @@ export class EnvValidation
 	 * @returns {EnvValidation} The EnvValidation instance.
 	 */
 	public removeConfigFileFilter(filter: RegExp): EnvValidation {
-		this.config_file_filters = this.config_file_filters.filter(f => f.source !== filter.source);
+		this._config_file_filters = this._config_file_filters.filter(f => f.source !== filter.source);
 		return this;
 	}
 
@@ -116,7 +170,7 @@ export class EnvValidation
 	 * @returns {EnvValidation} The EnvValidation instance.
 	 */
 	public clearConfigFileFilters(): EnvValidation {
-		this.config_file_filters = [];
+		this._config_file_filters = [];
 		return this;
 	}
 
@@ -127,29 +181,32 @@ export class EnvValidation
 	 * @returns {Record<string, unknown>}
 	 */
 	public validateEnv(config: Record<string, any>): Record<string, unknown> {
-		this.trigger(ENV_VALIDATION_HOOK.validate_before, { config });
+		this._events.get(ENV_VALIDATION_HOOK.before_validation)
+		    .dispatch(this, { config });
 
 		this.resolveConfigValidationSchema()
 		    .forEach(schema => {
 			    // validate the config object against the validation schema
-			    const { error } = schema.validate(config, { allowUnknown: true });
+			    const result = safeValidate(config, schema);
 
-			    this.trigger(
-				    ENV_VALIDATION_HOOK.validate_schema,
-				    {
-					    schema,
-					    config,
-					    error,
-				    },
-			    );
+			    this._events.get(ENV_VALIDATION_HOOK.validate_schema)
+			        .dispatch(
+				        this,
+				        {
+					        schema,
+					        config,
+					        error: result.success ? null : result.error,
+				        },
+			        );
 
 			    // if an error was found, re-throw it
-			    if (error) {
-				    throw new Error(`Config validation error: ${error.message}`);
+			    if (!result.success) {
+				    throw new Error(`Config validation error: ${result.error.message}`);
 			    }
 		    });
 
-		this.trigger(ENV_VALIDATION_HOOK.validate_after, { config });
+		this._events.get(ENV_VALIDATION_HOOK.after_validation)
+		    .dispatch(this, { config });
 
 		// return the validated config object if no error was found
 		return config;
@@ -158,30 +215,33 @@ export class EnvValidation
 	/**
 	 * @description This function will resolve the validation schema from each configuration file.
 	 * @example
-	 * export const validationSchema = Joi.object({
-	 * 	DB_HOST:     Joi.string().min(1, "utf8").required(),
-	 * 	DB_PORT:     Joi.number().min(1024).max(65535).required(),
-	 * 	DB_USERNAME: Joi.string().min(1, "utf8").required(),
-	 * 	DB_PASSWORD: Joi.string().min(1, "utf8").required(),
-	 * 	DB_DATABASE: Joi.string().min(1, "utf8").required(),
+	 * import { z } from "zod";
+	 * export const validationSchema = z.object({
+	 * 	   DB_HOST:     z.string().min(1),
+	 * 	   DB_PORT:     z.number().min(1024).max(65535),
+	 * 	   DB_USERNAME: z.string().min(1),
+	 * 	   DB_PASSWORD: z.string().min(1),
+	 * 	   DB_DATABASE: z.string().min(1),
 	 * });
-	 * @returns {Joi.ObjectSchema[]} The list of validation schemas.
+	 * @returns {ZodSchema[]} The list of validation schemas.
 	 */
-	private resolveConfigValidationSchema(): Joi.ObjectSchema[] {
-		return this.resolution_paths
+	private resolveConfigValidationSchema(): ZodSchema[] {
+		return this._resolution_paths
 		           .map(path => {
 			           const cwd = resolve(path);
 			           const config_files = readdirSync(cwd)
 				           .filter(value => this.passesConfigFileFilters(value));
 
-			           this.trigger(ENV_VALIDATION_HOOK.configuration_resolved_files, { files: config_files });
+			           this._events.get(ENV_VALIDATION_HOOK.configuration_resolved_files)
+			               .dispatch(this, { files: config_files });
 
 			           return tap(
 				           config_files.map(file => require(resolve(cwd, file)))
 				                       .map(config => config.validationSchema || null)
-				                       .filter(schema => schema !== null) as Joi.ObjectSchema[],
+				                       .filter(schema => schema !== null) as ZodSchema[],
 				           schemas => {
-					           this.trigger(ENV_VALIDATION_HOOK.configuration_loaded_schemas, { schemas });
+					           this._events.get(ENV_VALIDATION_HOOK.configuration_loaded_schemas)
+					               .dispatch(this, { schemas });
 				           },
 			           );
 		           })
@@ -195,6 +255,6 @@ export class EnvValidation
 	 * @private
 	 */
 	private passesConfigFileFilters(file: string): boolean {
-		return this.config_file_filters.some(filter => filter.test(file));
+		return this._config_file_filters.some(filter => filter.test(file));
 	}
 }
