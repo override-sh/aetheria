@@ -1,75 +1,32 @@
 import { Exclude } from "class-transformer";
 import { DateTime } from "luxon";
 import { MongoseId } from "@override/open-press-interfaces";
-import { IsAscii, IsEmail, IsString, IsStrongPassword, MaxLength, MinLength } from "class-validator";
+import { z } from "zod";
 
-export class CreateUserDTO {
+export const CreateUserDTOValidationSchema = z.object({
 	/**
 	 * @description The name of the user.
-	 * @type {string}
 	 */
-	@IsString()
-	@IsAscii()
-	@MinLength(3)
-	@MaxLength(255)
-	name!: string;
+	name: z.string()
+	       .min(3)
+	       .max(255),
 
 	/**
 	 * @description The email of the user.
-	 * @type {string}
 	 */
-	@IsEmail({
-		domain_specific_validation: true,
-	})
-	email!: string;
+	email: z.string()
+	        .email(),
 
 	/**
 	 * @description The password of the user.
-	 * @type {string}
 	 */
-	@IsStrongPassword({
-		minLength:    12,
-		minNumbers:   1,
-		minSymbols:   1,
-		minUppercase: 1,
-		minLowercase: 1,
-	})
-	password!: string;
-}
+	password: z.string()
+	           .min(12),
+});
+export type CreateUserDTO = z.infer<typeof CreateUserDTOValidationSchema>;
 
-export class UpdateUserDTO {
-	/**
-	 * @description The name of the user.
-	 * @type {string}
-	 */
-	@IsString()
-	@IsAscii()
-	@MinLength(3)
-	@MaxLength(255)
-	name?: string;
-
-	/**
-	 * @description The email of the user.
-	 * @type {string}
-	 */
-	@IsEmail({
-		domain_specific_validation: true,
-	})
-	email?: string;
-
-	/**
-	 * @description The password of the user.
-	 * @type {string}
-	 */
-	@IsStrongPassword({
-		minLength:    12,
-		minNumbers:   1,
-		minSymbols:   1,
-		minUppercase: 1,
-		minLowercase: 1,
-	})
-	password?: string;
-}
+export const UpdateUserDTOValidationSchema = CreateUserDTOValidationSchema.partial();
+export type UpdateUserDTO = z.infer<typeof UpdateUserDTOValidationSchema>;
 
 export class UserEntity {
 	id!: string;
