@@ -52,11 +52,6 @@
 				"libs/utility/src/server.ts"
 			]
 		},
-		"plugins": [
-			{
-				"transform": "typia/lib/transform"
-			}
-		],
 		"strictNullChecks": true,
 		"strict": true
 	},
