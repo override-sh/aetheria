@@ -1,7 +1,7 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { AuthController } from "./auth.controller";
 import { LocalStrategy } from "./strategies";
-import { INestApplication } from "@nestjs/common";
+import { INestApplication, ValidationPipe } from "@nestjs/common";
 import axios from "axios";
 import { AppModule } from "../app.module";
 import { Connection } from "mongoose";
@@ -42,6 +42,13 @@ describe("AuthController", () => {
 		user_service = module.get<UserService>(UserService);
 
 		app = module.createNestApplication();
+		app.useGlobalPipes(new ValidationPipe({
+			forbidNonWhitelisted: true,
+			forbidUnknownValues:  true,
+			stopAtFirstError:     true,
+			whitelist:            true,
+			transform:            true,
+		}));
 		await app.listen(3000);
 		url = await app.getUrl();
 	});
