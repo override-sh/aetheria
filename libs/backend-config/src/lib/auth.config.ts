@@ -1,7 +1,7 @@
 import { ConfigType, registerAs } from "@nestjs/config";
-import * as Joi from "joi";
 import { IAuthConfig } from "@override/open-press-interfaces";
 import * as process from "process";
+import { z } from "zod";
 
 /* istanbul ignore file */
 
@@ -9,8 +9,7 @@ export const authConfig = registerAs("auth", (): IAuthConfig => ({
 	hashing: {
 		algorithm:  "bcrypt",
 		iterations: +(process.env["BCRYPT_HASHING_ITERATION"] || "10"),
-		version:    process.env["BCRYPT_ALGORITHM_VERSION"]?.toLowerCase()
-		                                                   .startsWith("a") ? "a" : "b",
+		version:    process.env["BCRYPT_ALGORITHM_VERSION"]?.toLowerCase().startsWith("a") ? "a" : "b",
 	},
 	jwt:     {
 		encryption:  process.env["JWT_ENCRYPTION"]?.toLowerCase() === "asymmetric" ? "asymmetric" : "symmetric",
@@ -46,48 +45,80 @@ export type AuthConfig = ConfigType<typeof authConfig>;
 
 /**
  * @description This is the validation schema that will be used to validate the environment.
- * @type {Joi.ObjectSchema<any>}
  */
-export const validationSchema = Joi.object({
-	BCRYPT_HASHING_ITERATION: Joi.number()
-	                             .min(1),
-	BCRYPT_ALGORITHM_VERSION: Joi.string()
-	                             .valid("a", "b"),
+export const validationSchema = z
+	.object({
+		BCRYPT_HASHING_ITERATION: z.number().min(1).optional(),
+		BCRYPT_ALGORITHM_VERSION: z.enum(["a", "b"]).optional(),
 
-	JWT_ENCRYPTION: Joi.string()
-	                   .required()
-	                   .valid("symmetric", "asymmetric"),
-	JWT_SECRET:     Joi.string()
-	                   .when("JWT_ENCRYPTION", {
-		                   is:   "symmetric",
-		                   then: Joi.required(),
-	                   }),
-	JWT_PUBLIC_KEY: Joi.string()
-	                   .when("JWT_ENCRYPTION", {
-		                   is:   "asymmetric",
-		                   then: Joi.required(),
-	                   }),
-	private_key:    Joi.string()
-	                   .when("JWT_ENCRYPTION", {
-		                   is:   "asymmetric",
-		                   then: Joi.required(),
-	                   }),
-	JWT_ALGORITHM:  Joi.string()
-	                   .valid(
-		                   "HS256",
-		                   "HS384",
-		                   "HS512",
-		                   "RS256",
-		                   "RS384",
-		                   "RS512",
-		                   "ES256",
-		                   "ES384",
-		                   "ES512",
-		                   "PS256",
-		                   "PS384",
-		                   "PS512",
-	                   ),
-	JWT_AUDIENCE:   Joi.string(),
-	JWT_EXPIRES_IN: Joi.string(),
-	JWT_ISSUER:     Joi.string(),
-});
+		JWT_ENCRYPTION:  z.enum([
+			"symmetric", "asymmetric",
+		]),
+		JWT_SECRET:      z.string().optional(),
+		JWT_PUBLIC_KEY:  z.string().optional(),
+		JWT_PRIVATE_KEY: z.string().optional(),
+		JWT_ALGORITHM:   z.enum([
+				"HS256",
+				"HS384",
+				"HS512",
+				"RS256",
+				"RS384",
+				"RS512",
+				"ES256",
+				"ES384",
+				"ES512",
+				"PS256",
+				"PS384",
+				"PS512",
+			],
+		).optional(),
+		JWT_AUDIENCE:    z.string().optional(),
+		JWT_EXPIRES_IN:  z.string().optional(),
+		JWT_ISSUER:      z.string().optional(),
+	})
+	.superRefine((
+		obj,
+		ctx,
+	): obj is Omit<typeof obj, "JWT_PUBLIC_KEY" | "JWT_PRIVATE_KEY"> & {
+		JWT_PUBLIC_KEY: string,
+		JWT_PRIVATE_KEY: string,
+	} => {
+		if (obj.JWT_ENCRYPTION !== "asymmetric") {
+			return false;
+		}
+
+		if (!obj.JWT_PUBLIC_KEY || !obj.JWT_PRIVATE_KEY) {
+			ctx.addIssue({
+				code:     "invalid_type",
+				message:  "You must provide a public and private key for asymmetric encryption.",
+				path:     ["JWT_PUBLIC_KEY", "JWT_PRIVATE_KEY"],
+				expected: "string",
+				received: "undefined",
+			});
+			return false;
+		}
+
+		return true;
+	})
+	.superRefine((
+			obj,
+			ctx,
+		): obj is Omit<typeof obj, "JWT_SECRET"> & {
+			JWT_SECRET: string,
+		} => {
+			if (obj.JWT_ENCRYPTION !== "symmetric") {
+				return false;
+			}
+			if (!obj.JWT_SECRET) {
+				ctx.addIssue({
+					code:     "invalid_type",
+					message:  "You must provide a secret for symmetric encryption.",
+					path:     ["JWT_SECRET"],
+					expected: "string",
+					received: "undefined",
+				});
+				return false;
+			}
+			return true;
+		},
+	);
