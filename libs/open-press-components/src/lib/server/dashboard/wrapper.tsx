@@ -2,7 +2,7 @@ import { LeftPaneHeader, LeftPaneNavigation, LeftPaneWrapper } from "../left-pan
 import { LeftPaneButton } from "../../client/button";
 import { dashboard_classes } from "./style";
 import { DashboardPageWrapper } from "./page-wrapper";
-import { LeftPaneButtonProps, ReactChildren } from "@override/open-press-interfaces";
+import { LeftPaneButtonProps, ReactChildren } from "@open-press/interfaces";
 import { HTMLAttributes } from "react";
 import classNames from "classnames";
 import dashboard from "../../../styles/dashboard.module.css";

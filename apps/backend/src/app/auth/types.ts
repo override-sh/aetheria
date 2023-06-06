@@ -4,8 +4,8 @@ import {
 	PASSPORT_JWT_STRATEGY_EVENTS,
 	PASSPORT_LOCAL_STRATEGY_EVENTS,
 } from "./constants";
-import { UserDocument, UserEntity, UserNotFoundError } from "@override/open-press-models";
-import { JwtResponse } from "@override/open-press-interfaces";
+import { UserDocument, UserEntity, UserNotFoundError } from "@open-press/models";
+import { JwtResponse } from "@open-press/interfaces";
 import { Request } from "express";
 import { JwtPayload } from "jsonwebtoken";
 

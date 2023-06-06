@@ -1,4 +1,4 @@
-import { ReactChildren } from "@override/open-press-interfaces";
+import { ReactChildren } from "@open-press/interfaces";
 import classNames from "classnames";
 import { left_pane_classes } from "./style";
 import { HTMLAttributes } from "react";

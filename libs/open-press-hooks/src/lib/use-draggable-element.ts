@@ -3,7 +3,7 @@
 /* istanbul ignore file */
 
 import { DragEvent, useCallback, useEffect, useState } from "react";
-import { getCurrentEventSelector, getElementOffset, updateValueAtIndex } from "@override/utility";
+import { getCurrentEventSelector, getElementOffset, updateValueAtIndex } from "@open-press/utility";
 
 export const useDraggableElement = (
 	header_query_selector: string,

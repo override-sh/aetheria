@@ -1,6 +1,6 @@
 import { Editor } from "grapesjs";
-import { explodeClasses, GrapesJsUtility } from "@override/utility";
-import { TRAIT_SECTION_HEADER } from "@override/gjs-ui";
+import { explodeClasses, GrapesJsUtility } from "@open-press/utility";
+import { TRAIT_SECTION_HEADER } from "@open-press/gjs-ui";
 
 export const GridComponent = (editor: Editor) => {
 	editor.Components.addType("grid", {

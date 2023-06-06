@@ -2,8 +2,8 @@ import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 import { User, UserSchema } from "./user.schema";
 import { UserService } from "./user.service";
-import { DATABASE_CONNECTIONS } from "@override/backend-config";
-import { HashModule } from "@override/open-press-support";
+import { DATABASE_CONNECTIONS } from "@open-press/backend-config";
+import { HashModule } from "@open-press/support";
 
 @Module({
 	imports:   [

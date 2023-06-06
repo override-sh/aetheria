@@ -1,10 +1,7 @@
 import { Component, Editor } from "grapesjs";
-import { GrapesJsUtility } from "@override/utility";
-import {
-	ComponentAttributeChangeHandlerOptions,
-	TraitHorizontalSeparatorExtraSettings,
-} from "@override/open-press-interfaces";
-import { TRAIT_HORIZONTAL_SEPARATOR, TRAIT_SECTION_HEADER } from "@override/gjs-ui";
+import { GrapesJsUtility } from "@open-press/utility";
+import { ComponentAttributeChangeHandlerOptions, TraitHorizontalSeparatorExtraSettings } from "@open-press/interfaces";
+import { TRAIT_HORIZONTAL_SEPARATOR, TRAIT_SECTION_HEADER } from "@open-press/gjs-ui";
 
 type InputTypes =
 	"text"

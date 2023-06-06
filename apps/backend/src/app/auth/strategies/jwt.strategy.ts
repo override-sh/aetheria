@@ -1,8 +1,8 @@
 import { ExtractJwt, Strategy } from "passport-jwt";
 import { PassportStrategy } from "@nestjs/passport";
 import { Inject, Injectable } from "@nestjs/common";
-import { AUTH_CONFIG_KEY, AuthConfig } from "@override/backend-config";
-import { UserDocument, UserService } from "@override/open-press-models";
+import { AUTH_CONFIG_KEY, AuthConfig } from "@open-press/backend-config";
+import { UserDocument, UserService } from "@open-press/models";
 import { JwtPayload } from "jsonwebtoken";
 import { PassportJwtStrategyEvents } from "../types";
 import { NonUniformEventList } from "strongly-typed-events";

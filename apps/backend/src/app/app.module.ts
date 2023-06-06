@@ -7,7 +7,7 @@ import {
 	databaseConfig,
 	DatabaseConfig,
 	EnvValidation,
-} from "@override/backend-config";
+} from "@open-press/backend-config";
 import { MongooseModule } from "@nestjs/mongoose";
 import { MongooseModuleFactoryOptions } from "@nestjs/mongoose/dist/interfaces/mongoose-options.interface";
 import { APP_GUARD, APP_INTERCEPTOR } from "@nestjs/core";

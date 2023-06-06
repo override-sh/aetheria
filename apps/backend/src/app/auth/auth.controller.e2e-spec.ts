@@ -6,8 +6,8 @@ import axios from "axios";
 import { AppModule } from "../app.module";
 import { Connection } from "mongoose";
 import { getConnectionToken } from "@nestjs/mongoose";
-import { DATABASE_CONNECTIONS } from "@override/backend-config";
-import { UserService } from "@override/open-press-models";
+import { DATABASE_CONNECTIONS } from "@open-press/backend-config";
+import { UserService } from "@open-press/models";
 import { faker } from "@faker-js/faker";
 
 describe("AuthController", () => {

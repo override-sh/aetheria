@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { BadRequestException } from "@nestjs/common";
-import { Constructor } from "@override/open-press-interfaces";
+import { Constructor } from "@open-press/interfaces";
 import { validate } from "./validate";
 
 export const validateMany = <

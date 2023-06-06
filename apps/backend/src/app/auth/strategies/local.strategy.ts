@@ -4,7 +4,7 @@ import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { AuthService } from "../auth.service";
 import { PASSPORT_LOCAL_STRATEGY_EVENTS } from "../constants";
 import { PassportLocalStrategyEvents } from "../types";
-import { UserDocument } from "@override/open-press-models";
+import { UserDocument } from "@open-press/models";
 import { NonUniformEventList } from "strongly-typed-events";
 
 @Injectable()

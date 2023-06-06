@@ -2,7 +2,7 @@ import { ExecutionContext, Injectable } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { Reflector } from "@nestjs/core";
 import { Observable } from "rxjs";
-import { IS_PUBLIC_ENDPOINT_KEY } from "@override/open-press-support";
+import { IS_PUBLIC_ENDPOINT_KEY } from "@open-press/support";
 
 @Injectable()
 export class JwtAuthGuard

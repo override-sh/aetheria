@@ -1,9 +1,9 @@
 "use client";
 
-import { ReactChildren } from "@override/open-press-interfaces";
+import { ReactChildren } from "@open-press/interfaces";
 import { useState } from "react";
-import { DashboardWrapper } from "@override/open-press-components/server";
-import { useTranslateElementOnScroll } from "@override/open-press-hooks";
+import { DashboardWrapper } from "@open-press/components/server";
+import { useTranslateElementOnScroll } from "@open-press/hooks";
 
 export default function Layout(
 	{

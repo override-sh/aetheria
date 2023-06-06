@@ -1,11 +1,11 @@
 import { Injectable } from "@nestjs/common";
-import { UserDocument, UserService } from "@override/open-press-models";
+import { UserDocument, UserService } from "@open-press/models";
 import { JwtService } from "@nestjs/jwt";
 import { NonUniformEventList } from "strongly-typed-events";
 import { AuthServiceEvents } from "./types";
 import { AUTH_SERVICE_EVENTS } from "./constants";
 import { tap } from "lodash";
-import { JwtResponse } from "@override/open-press-interfaces";
+import { JwtResponse } from "@open-press/interfaces";
 
 @Injectable()
 export class AuthService {

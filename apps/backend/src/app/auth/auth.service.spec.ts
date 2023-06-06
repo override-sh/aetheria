@@ -10,10 +10,10 @@ import {
 	DatabaseConfig,
 	databaseConfig,
 	EnvValidation,
-} from "@override/backend-config";
+} from "@open-press/backend-config";
 import { MongooseModule } from "@nestjs/mongoose";
 import { MongooseModuleFactoryOptions } from "@nestjs/mongoose/dist/interfaces/mongoose-options.interface";
-import { UserModelModule } from "@override/open-press-models";
+import { UserModelModule } from "@open-press/models";
 import { PassportModule } from "@nestjs/passport";
 import { JwtModule, JwtModuleOptions } from "@nestjs/jwt";
 import { JwtStrategy, LocalStrategy } from "./strategies";

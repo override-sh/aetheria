@@ -1,7 +1,7 @@
 "use client";
 
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
-import { LeftPaneButtonProps } from "@override/open-press-interfaces";
+import { LeftPaneButtonProps } from "@open-press/interfaces";
 
 import { HtmlHTMLAttributes } from "react";
 import classNames from "classnames";

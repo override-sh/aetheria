@@ -9,8 +9,8 @@ import {
 	databaseConfig,
 	DatabaseConfig,
 	EnvValidation,
-} from "@override/backend-config";
-import { HashModule, HashService } from "@override/open-press-support";
+} from "@open-press/backend-config";
+import { HashModule, HashService } from "@open-press/support";
 import { MongooseModuleFactoryOptions } from "@nestjs/mongoose/dist/interfaces/mongoose-options.interface";
 import { ConfigModule } from "@nestjs/config";
 import { Connection } from "mongoose";

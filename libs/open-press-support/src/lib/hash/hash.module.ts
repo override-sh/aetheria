@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { HashService } from "./hash.service";
 import { ConfigModule } from "@nestjs/config";
-import { authConfig } from "@override/backend-config";
+import { authConfig } from "@open-press/backend-config";
 
 @Module({
 	imports:   [

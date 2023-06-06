@@ -7,7 +7,7 @@ import {
 	ComponentAttributeChangeHandler,
 	ComponentAttributeChangeHandlerOptions,
 	GenericObject,
-} from "@override/open-press-interfaces";
+} from "@open-press/interfaces";
 import { capitalize } from "lodash";
 
 /**

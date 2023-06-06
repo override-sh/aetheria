@@ -1,4 +1,4 @@
-import { CardProps, ReactChildren } from "@override/open-press-interfaces";
+import { CardProps, ReactChildren } from "@open-press/interfaces";
 import { HTMLAttributes } from "react";
 import { card_classes } from "./style";
 import classNames from "classnames";

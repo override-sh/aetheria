@@ -1,5 +1,5 @@
 import { ConfigType, registerAs } from "@nestjs/config";
-import { IDatabaseConfig } from "@override/open-press-interfaces";
+import { IDatabaseConfig } from "@open-press/interfaces";
 import { z } from "zod";
 
 /* istanbul ignore file */

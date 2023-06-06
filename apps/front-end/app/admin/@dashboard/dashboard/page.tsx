@@ -5,8 +5,8 @@ import grapesjs, { Editor } from "grapesjs";
 import { useEffect, useState } from "react";
 
 import "./editor.css";
-import { BaseBlocksPlugin } from "@override/gjs-base-blocks";
-import { UiPlugin } from "@override/gjs-ui";
+import { BaseBlocksPlugin, makeBlockLabel } from "@open-press/gjs-base-blocks";
+import { UiPlugin } from "@open-press/gjs-ui";
 
 import GjsStyleBgPlugin from "grapesjs-style-bg";
 import "grapick/dist/grapick.min.css";
@@ -16,7 +16,6 @@ import GjsTuiImageEditorPlugin from "grapesjs-tui-image-editor";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import GjsTypedPlugin from "grapesjs-typed";
-import { makeBlockLabel } from "@override/gjs-base-blocks";
 
 export default function Dashboard(): JSX.Element {
 	const [editor, set_editor] = useState<Editor | null>(null);

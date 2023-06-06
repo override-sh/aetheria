@@ -1,6 +1,6 @@
 import { Editor } from "grapesjs";
-import { TRAIT_SECTION_HEADER } from "@override/gjs-ui";
-import { explodeClasses } from "@override/utility";
+import { TRAIT_SECTION_HEADER } from "@open-press/gjs-ui";
+import { explodeClasses } from "@open-press/utility";
 
 type ButtonTypes =
 	"button"

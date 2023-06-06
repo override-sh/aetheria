@@ -1,5 +1,5 @@
 import { TEMPLATE_CONTROLLER_EVENTS } from "./constants";
-import { CreateTemplateDTO, TemplateDocument, UpdateTemplateDTO } from "@override/open-press-models";
+import { CreateTemplateDTO, TemplateDocument, UpdateTemplateDTO } from "@open-press/models";
 
 /**
  * @description This type contains the event names and their payloads that are emitted by the TemplateController.

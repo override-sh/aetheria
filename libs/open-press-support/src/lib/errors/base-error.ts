@@ -1,4 +1,4 @@
-import { Constructor } from "@override/open-press-interfaces";
+import { Constructor } from "@open-press/interfaces";
 
 /**
  * @description This method will create a new error class.

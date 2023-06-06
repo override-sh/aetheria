@@ -1,6 +1,6 @@
 import { ITraitView } from "grapesjs";
-import { explodeClasses } from "@override/utility";
-import { TraitHorizontalSeparatorExtraSettings } from "@override/open-press-interfaces";
+import { explodeClasses } from "@open-press/utility";
+import { TraitHorizontalSeparatorExtraSettings } from "@open-press/interfaces";
 
 export const TraitHorizontalSeparator: ITraitView = {
 	noLabel: true,

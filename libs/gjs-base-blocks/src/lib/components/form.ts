@@ -1,5 +1,5 @@
 import { Editor } from "grapesjs";
-import { explodeClasses } from "@override/utility";
+import { explodeClasses } from "@open-press/utility";
 
 export const FormComponent = (editor: Editor) => {
 	editor.Components.addType("form", {

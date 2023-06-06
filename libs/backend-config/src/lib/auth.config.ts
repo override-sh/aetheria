@@ -1,5 +1,5 @@
 import { ConfigType, registerAs } from "@nestjs/config";
-import { IAuthConfig } from "@override/open-press-interfaces";
+import { IAuthConfig } from "@open-press/interfaces";
 import * as process from "process";
 import { z } from "zod";
 

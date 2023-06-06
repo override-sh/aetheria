@@ -1,5 +1,5 @@
-import {ReactChildren} from "@override/open-press-interfaces";
-import {ReactNode} from "react";
+import { ReactChildren } from "@open-press/interfaces";
+import { ReactNode } from "react";
 
 export default function Layout(
   {

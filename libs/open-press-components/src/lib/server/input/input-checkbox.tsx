@@ -1,5 +1,5 @@
 import { InputWrapper } from "./input-wrapper";
-import { InputCheckableProps } from "@override/open-press-interfaces";
+import { InputCheckableProps } from "@open-press/interfaces";
 import { input_classes } from "./style";
 import { HTMLAttributes } from "react";
 import classNames from "classnames";

@@ -7,7 +7,7 @@ import {
 	InputCheckbox,
 	InputEmail,
 	InputPassword,
-} from "@override/open-press-components/server";
+} from "@open-press/components/server";
 
 export default function Login(): JSX.Element {
 	return (

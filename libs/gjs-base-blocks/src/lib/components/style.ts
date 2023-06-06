@@ -1,8 +1,8 @@
 import { Component, Editor } from "grapesjs";
-import { TRAIT_SECTION_HEADER } from "@override/gjs-ui";
+import { TRAIT_SECTION_HEADER } from "@open-press/gjs-ui";
 import { OPEN_STYLESHEET_EDITOR_MODAL, OpenStylesheetEditorModalOptions } from "../commands";
-import { GrapesJsUtility } from "@override/utility";
-import { ComponentAttributeChangeHandlerOptions } from "@override/open-press-interfaces";
+import { GrapesJsUtility } from "@open-press/utility";
+import { ComponentAttributeChangeHandlerOptions } from "@open-press/interfaces";
 
 
 export const StyleComponent = (editor: Editor) => {

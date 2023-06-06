@@ -1,6 +1,6 @@
 import { Editor } from "grapesjs";
 import { makeBlockLabel } from "./label-factory";
-import { explodeClasses } from "@override/utility";
+import { explodeClasses } from "@open-press/utility";
 
 export const LabelBlock = (editor: Editor) => {
 	editor.Blocks.add("label", {

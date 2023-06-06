@@ -1,5 +1,5 @@
 import { Editor } from "grapesjs";
-import { TRAIT_SECTION_HEADER } from "@override/gjs-ui";
+import { TRAIT_SECTION_HEADER } from "@open-press/gjs-ui";
 import { OpenScriptEditorModalOptions } from "../commands";
 import { OPEN_SCRIPT_EDITOR_MODAL } from "../commands/names";
 

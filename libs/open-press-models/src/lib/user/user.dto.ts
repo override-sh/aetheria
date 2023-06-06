@@ -1,6 +1,6 @@
 import { Exclude } from "class-transformer";
 import { DateTime } from "luxon";
-import { MongoseId } from "@override/open-press-interfaces";
+import { MongoseId } from "@open-press/interfaces";
 import { z } from "zod";
 
 export const CreateUserDTOValidationSchema = z.object({

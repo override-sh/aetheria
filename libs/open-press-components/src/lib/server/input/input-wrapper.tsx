@@ -1,4 +1,4 @@
-import { InputWrapperProps, ReactChildren } from "@override/open-press-interfaces";
+import { InputWrapperProps, ReactChildren } from "@open-press/interfaces";
 import { input_classes } from "./style";
 import { HTMLAttributes } from "react";
 import classNames from "classnames";

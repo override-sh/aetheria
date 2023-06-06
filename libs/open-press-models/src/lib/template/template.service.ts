@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { DATABASE_CONNECTIONS } from "@override/backend-config";
+import { DATABASE_CONNECTIONS } from "@open-press/backend-config";
 import { Template, TemplateDocument, TemplateModel } from "./template.schema";
 import { CreateTemplateDTO, UpdateTemplateDTO } from "./template.dto";
 import { TemplateNameAlreadyUsedErrorFactory, TemplateNotFoundErrorFactory } from "./errors";

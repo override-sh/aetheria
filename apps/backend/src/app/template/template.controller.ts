@@ -6,11 +6,11 @@ import {
 	TemplateService,
 	UpdateTemplateDTO,
 	UpdateTemplateDTOValidationSchema,
-} from "@override/open-press-models";
+} from "@open-press/models";
 import { NonUniformEventList } from "strongly-typed-events";
 import { TemplateControllerEvents } from "./types";
 import { TEMPLATE_CONTROLLER_EVENTS } from "./constants";
-import { validate, validateMany } from "@override/utility/server";
+import { validate, validateMany } from "@open-press/utility/server";
 import { MongoIdSchema } from "../../../../../libs/utility/src/lib/validation/common-schemas";
 
 @Controller("template")

@@ -1,11 +1,11 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { INestApplication } from "@nestjs/common";
-import { TemplateService, UserService } from "@override/open-press-models";
+import { TemplateService, UserService } from "@open-press/models";
 import { Connection } from "mongoose";
 import { faker } from "@faker-js/faker";
 import { AppModule } from "../app.module";
 import { getConnectionToken } from "@nestjs/mongoose";
-import { DATABASE_CONNECTIONS } from "@override/backend-config";
+import { DATABASE_CONNECTIONS } from "@open-press/backend-config";
 import axios from "axios";
 
 describe("TemplateController", () => {

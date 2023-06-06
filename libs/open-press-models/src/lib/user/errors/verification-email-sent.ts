@@ -1,4 +1,4 @@
-import { BaseError, BaseErrorType } from "@override/open-press-support";
+import { BaseError, BaseErrorType } from "@open-press/support";
 
 /**
  * Error thrown when a user tries to update or register with an email already in use.

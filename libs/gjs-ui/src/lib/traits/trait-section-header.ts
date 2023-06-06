@@ -1,5 +1,5 @@
 import { ITraitView } from "grapesjs";
-import { explodeClasses } from "@override/utility";
+import { explodeClasses } from "@open-press/utility";
 
 export const TraitSectionHeader: ITraitView = {
 	noLabel: true,

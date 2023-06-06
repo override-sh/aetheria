@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { User, UserDocument, UserModel } from "./user.schema";
-import { DATABASE_CONNECTIONS } from "@override/backend-config";
+import { DATABASE_CONNECTIONS } from "@open-press/backend-config";
 import { DateTime } from "luxon";
-import { HashService } from "@override/open-press-support";
+import { HashService } from "@open-press/support";
 import { CreateUserDTO, UpdateUserDTO } from "./user.dto";
 import { UserNotFoundErrorFactory, VerificationEmailSentErrorFactory } from "./errors";
 

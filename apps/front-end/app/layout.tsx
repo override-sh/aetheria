@@ -1,8 +1,8 @@
 import { Metadata } from "next";
-import { ReactChildren } from "@override/open-press-interfaces";
+import { ReactChildren } from "@open-press/interfaces";
 
 import "./globals.css";
-import { nunito } from "@override/open-press-components/server";
+import { nunito } from "@open-press/components/server";
 import "@tabler/icons-webfont/tabler-icons.min.css";
 
 export const metadata: Metadata = {

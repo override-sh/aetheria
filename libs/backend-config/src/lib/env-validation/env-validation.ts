@@ -1,6 +1,6 @@
 import { resolve } from "path";
 import { readdirSync } from "fs";
-import { safeValidate } from "@override/utility/server";
+import { safeValidate } from "@open-press/utility/server";
 import { EnvValidationEvents } from "./types";
 import { ENV_VALIDATION_HOOK } from "./constants";
 import { ZodSchema } from "zod";

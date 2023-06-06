@@ -1,4 +1,4 @@
-import { ButtonCommonProps, ReactChildren } from "@override/open-press-interfaces";
+import { ButtonCommonProps, ReactChildren } from "@open-press/interfaces";
 import { HTMLAttributes } from "react";
 import { button_classes } from "./style";
 import classNames from "classnames";

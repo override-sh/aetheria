@@ -1,4 +1,4 @@
-import { CardHeaderProps, PartialReactChildren } from "@override/open-press-interfaces";
+import { CardHeaderProps, PartialReactChildren } from "@open-press/interfaces";
 import { HTMLAttributes } from "react";
 import { card_classes } from "./style";
 import classNames from "classnames";

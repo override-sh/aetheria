@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 import { Template, TemplateSchema } from "./template.schema";
-import { DATABASE_CONNECTIONS } from "@override/backend-config";
+import { DATABASE_CONNECTIONS } from "@open-press/backend-config";
 import { TemplateService } from "./template.service";
 
 @Module({

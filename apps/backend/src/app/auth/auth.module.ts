@@ -1,11 +1,11 @@
 import { Module } from "@nestjs/common";
 import { AuthService } from "./auth.service";
-import { UserModelModule } from "@override/open-press-models";
+import { UserModelModule } from "@open-press/models";
 import { PassportModule } from "@nestjs/passport";
 import { JwtStrategy, LocalStrategy } from "./strategies";
 import { AuthController } from "./auth.controller";
 import { JwtModule, JwtModuleOptions } from "@nestjs/jwt";
-import { AUTH_CONFIG_KEY, AuthConfig } from "@override/backend-config";
+import { AUTH_CONFIG_KEY, AuthConfig } from "@open-press/backend-config";
 
 @Module({
 	imports: [

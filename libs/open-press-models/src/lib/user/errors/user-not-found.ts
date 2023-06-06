@@ -1,4 +1,4 @@
-import { BaseError, BaseErrorType } from "@override/open-press-support";
+import { BaseError, BaseErrorType } from "@open-press/support";
 
 /**
  * User not found error

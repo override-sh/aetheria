@@ -1,4 +1,4 @@
-import { ReactChildren } from "@override/open-press-interfaces";
+import { ReactChildren } from "@open-press/interfaces";
 import dashboard from "../../../styles/dashboard.module.css";
 import { HTMLAttributes } from "react";
 import classNames from "classnames";

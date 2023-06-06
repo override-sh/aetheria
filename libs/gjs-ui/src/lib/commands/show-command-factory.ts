@@ -1,5 +1,5 @@
 import { CommandObject, Editor } from "grapesjs";
-import { NullableHTMLElement } from "@override/open-press-interfaces";
+import { NullableHTMLElement } from "@open-press/interfaces";
 
 type ShowCommandType = CommandObject & {
 	getEditorRow(editor: Editor): HTMLElement;

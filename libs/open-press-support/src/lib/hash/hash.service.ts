@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@nestjs/common";
 import * as bcrypt from "bcrypt";
-import { AUTH_CONFIG_KEY, AuthConfig } from "@override/backend-config";
+import { AUTH_CONFIG_KEY, AuthConfig } from "@open-press/backend-config";
 
 @Injectable()
 export class HashService {
