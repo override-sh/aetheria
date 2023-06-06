@@ -17,4 +17,6 @@ export default {
 		"html",
 	],
 	coverageDirectory:    "../../coverage/apps/backend",
+	maxConcurrency:       1,
+	maxWorkers:           1,
 };

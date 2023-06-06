@@ -1,8 +1,17 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
-import { CreateTemplateDTO, TemplateEntity, TemplateService, UpdateTemplateDTO } from "@override/open-press-models";
+import {
+	CreateTemplateDTO,
+	CreateTemplateDTOValidationSchema,
+	TemplateEntity,
+	TemplateService,
+	UpdateTemplateDTO,
+	UpdateTemplateDTOValidationSchema,
+} from "@override/open-press-models";
 import { NonUniformEventList } from "strongly-typed-events";
 import { TemplateControllerEvents } from "./types";
 import { TEMPLATE_CONTROLLER_EVENTS } from "./constants";
+import { validate, validateMany } from "@override/utility/server";
+import { MongoIdSchema } from "../../../../../libs/utility/src/lib/validation/common-schemas";
 
 @Controller("template")
 export class TemplateController {
@@ -119,6 +128,8 @@ export class TemplateController {
 	 */
 	@Post()
 	async create(@Body() template: CreateTemplateDTO) {
+		template = validate<CreateTemplateDTO>(template, CreateTemplateDTOValidationSchema);
+
 		this._events.get(TEMPLATE_CONTROLLER_EVENTS.creation_before)
 		    .dispatch(this, { template });
 
@@ -141,6 +152,20 @@ export class TemplateController {
 		@Param("id") template_id: string,
 		@Body() template: UpdateTemplateDTO,
 	) {
+		[
+			template_id,
+			template,
+		] = validateMany<[string, UpdateTemplateDTO]>(
+			[
+				template_id,
+				template,
+			],
+			[
+				MongoIdSchema,
+				UpdateTemplateDTOValidationSchema,
+			],
+		);
+
 		this._events.get(TEMPLATE_CONTROLLER_EVENTS.update_before)
 		    .dispatch(
 			    this,
@@ -165,6 +190,8 @@ export class TemplateController {
 	 */
 	@Delete(":id")
 	async delete(@Param("id") template_id: string) {
+		template_id = validate<string>(template_id, MongoIdSchema);
+
 		this._events.get(TEMPLATE_CONTROLLER_EVENTS.delete_before)
 		    .dispatch(this, { template_id });
 
@@ -183,6 +210,8 @@ export class TemplateController {
 	 */
 	@Get(":id")
 	async get(@Param("id") template_id: string) {
+		template_id = validate<string>(template_id, MongoIdSchema);
+
 		this._events.get(TEMPLATE_CONTROLLER_EVENTS.get_before)
 		    .dispatch(this, { template_id });
 
