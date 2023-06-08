@@ -1,5 +1,8 @@
 # OpenPress
 
+> This project is used as a monorepo reference to the OpenPress project.
+> It does not contain any code, refer to the linked projects for the actual code.
+
 ## Introducing OpenPress: The Overpowered and Extensible Open-Source Solution
 
 OpenPress is an ambitious open-source project designed to revolutionize the world of website content management.
@@ -37,13 +40,39 @@ creation and empower everyone to build exceptional online experiences.
 > **NOTE**<br>
 > OpenPress is currently under development, and its ambitious goals are driving the team to create a cutting-edge
 > solution, this means that it is currently unstable and that the underground API may change without prior
-> communication. 
+> communication.
 > Stay tuned for updates, releases, and opportunities to get involved in shaping the future of content
 > management with OpenPress.
 
-## Understand this workspace
+## Getting Started
 
-This monorepo workspace is powered by [Nx](https://nx.dev/).
+As OpenPress is a monorepo, it contains multiple projects, each with its own dependencies and build process.
+To get started, you will need to clone the repository and install the dependencies for each project.
 
-Run `nx graph` to see a diagram of the dependencies of the projects.
+### Prerequisites
 
+- [Node.js](https://nodejs.org/en/) (v16 or higher)
+- Yarn / Npm
+- [Docker](https://www.docker.com/) (optional)
+- [Docker Compose](https://docs.docker.com/compose/) (optional)
+
+### Installation
+
+1. Clone the repository
+
+   ```sh
+   git clone --recurse-submodules
+    ```
+
+2. Install dependencies
+3. Build the projects
+
+   ```sh
+   npm run build
+   ```
+
+4. Start the projects
+
+   ```sh
+    npm run start
+    ```

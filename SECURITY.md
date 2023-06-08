@@ -2,14 +2,9 @@
 
 ## Supported Versions
 
-Temporarily there are no supported release as the project is still under construction.
-As soon as the first release reaches stability we'll update the current page
+For a list of supported releases, please refer to the security bulletin of the appropriate linked repository.
 
-| Version | Supported          |
-| ------- | ------------------ |
-| main    | ✔️ |
+Quick links are provided below for convenience:
 
-## Reporting a Vulnerability
-
-Vulnerabilities should be communicated using the appropriate issue template named `Report a security vulnerability`.
-Reports not following the proper definition won't be handled.
+* ### [OpenPress - headless](https://github.com/override-sh/open-press-headless/blob/main/SECURITY.md)
+* ### [OpenPress - frontend](https://github.com/override-sh/open-press-frontend/blob/main/SECURITY.md)
