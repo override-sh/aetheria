@@ -1,0 +1,6 @@
+[submodule "open-press-frontend"]
+	path = open-press-frontend
+	url = https://github.com/override-sh/open-press-frontend
+[submodule "open-press-headless"]
+	path = open-press-headless
+	url = https://github.com/override-sh/open-press-headless
