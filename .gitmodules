@@ -4,3 +4,6 @@
 [submodule "open-press-headless"]
 	path = open-press-headless
 	url = https://github.com/override-sh/open-press-headless
+[submodule "open-press-docs"]
+	path = open-press-docs
+	url = https://github.com/override-sh/open-press-docs
