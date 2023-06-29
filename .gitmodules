@@ -7,3 +7,6 @@
 [submodule "docs"]
 	path = docs
 	url = https://github.com/override-sh/aetheria-docs.git
+[submodule "cli"]
+	path = cli
+	url = https://github.com/override-sh/aetheria-cli.git
