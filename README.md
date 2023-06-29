@@ -59,20 +59,19 @@ To get started, you will need to clone the repository and install the dependenci
 ### Installation
 
 1. Clone the repository
-
-   ```sh
-   git clone --recurse-submodules
-    ```
+```bash
+git clone git@github.com:override-sh/aetheria.git --recurse-submodules
+```
 
 2. Install dependencies
 3. Build the projects
 
-   ```sh
-   npm run build
-   ```
+```bash
+npm run build
+```
 
 4. Start the projects
 
-   ```sh
-    npm run start
-    ```
+```bash
+ npm run start
+```
